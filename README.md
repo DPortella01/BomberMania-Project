@@ -67,7 +67,7 @@ Upon launching the game, players are greeted by a visually appealing and straigh
 - **How to Play:**
   The "How to Play" option offers a concise yet comprehensive guide, providing players with an overview of the game's controls, objectives, and power-ups. This section caters to both newcomers and seasoned players, ensuring everyone is on the same explosive page.
 
-### 3.10 Controls
+### Controls
 
 BomberMania employs a straightforward and accessible control scheme designed to accommodate both Player 1 and Player 2, each utilizing a standard keyboard setup. The controls are intuitively mapped to ensure a seamless and enjoyable gaming experience.
 
