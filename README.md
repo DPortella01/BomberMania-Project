@@ -6,7 +6,7 @@
 
 ## Game Description
 
-### 3.1 Overview
+### Overview
 
 *BomberMania* immerses players in an exhilarating gaming environment characterized by collaborative multiplayer interactions. Situated within expansive arenas, participants engage in strategic competitions by strategically placing bombs. This gameplay concept draws inspiration from the timeless classic Bomberman yet integrates contemporary elements to enhance the multiplayer experience.
 
@@ -16,7 +16,7 @@ BomberMania presents a visual design that pays tribute to the timeless aesthetic
 
 BomberMania transcends the realm of a mere game, offering players an immersive journey into competitive nostalgia. The strategic bomb placements and collaborative multiplayer dynamics combine to create a unique gaming experience. Welcome to BomberMania – a convergence of past and future, where triumph is a well-placed explosion away.
 
-### 3.2 Quest
+### Quest
 
 In BomberMania, the primary quest unfolds as a dynamic and strategic multiplayer experience to emerge as the last remaining bomber in each round. Players engage in a thrilling journey within the arena, strategically navigating their surroundings, overcoming obstacles, and employing clever tactics to outmaneuver opponents and claim victory.
 
@@ -24,7 +24,7 @@ The multiplayer quest revolves around the systematic destruction of blocks to re
 
 The quest for supremacy unfolds in a continuous cycle of rounds, with each new match offering a fresh opportunity for players to refine their strategies and adapt to the evolving dynamics of the arena. The journey to become the last bomber standing is not only a test of skill but a progression through a strategically layered multiplayer experience, where every move and decision contributes to the ultimate goal of achieving victory in the explosive battleground of BomberMania.
 
-### 3.3 Main Character
+### Main Character
 
 In BomberMania, the main character closely resembles the iconic Bomberman – a classic, affable character recognized for its simplicity and effectiveness in gaming. Players embody this familiar figure within the multiplayer arena, a steadfast bomber ready to engage in explosive confrontations.
 
@@ -36,11 +36,7 @@ As gameplay progresses, the character's abilities evolve organically by acquirin
 
 Unlike the customization approach, this representation of the main character maintains the nostalgic essence of Bomberman, ensuring that players feel connected to the classic gaming experience. The simplicity and familiarity of the main character in BomberMania Multiplayer Madness harken back to the roots of the arcade classic while providing a platform for engaging and competitive multiplayer action.
 
-### 3.4 Sketch of Main Character
-
-*(Insert Sketch Image)*
-
-### 3.5 Opponents
+### Opponents
 
 In BomberMania, the primary opponents are embodied by rival players, each adopting the appearance of a bomber akin to the main character. The primary distinction lies in color variations to facilitate easy differentiation between Player 1 and 2. This intentional design choice ensures clarity in the chaotic and dynamic multiplayer arena.
 
@@ -48,11 +44,7 @@ Opponent intelligence is programmed to be controlled by the second player, refle
 
 Despite sharing a visual resemblance with the main character, opponents contribute to the competitive nature of BomberMania Multiplayer Madness by adopting varied strategies. The color-coded distinction between Player 1 and 2 serves as a visual cue, allowing players to quickly identify and react to their opponent's movements and tactics amid explosive chaos.
 
-### 3.6 Sketch of Opponents
-
-*(Insert Sketch Image)*
-
-### 3.7 Environment
+### Environment
 
 BomberMania unfolds within a captivating and dynamic setting, immersed in fields designed with destructible blocks that serve as the canvas for explosive gameplay. The environment eschews futuristic or fantastical elements, opting for a grounded and relatable backdrop that resonates with the aesthetics of the present day.
 
@@ -62,11 +54,7 @@ The defining feature of the environment is the presence of destructible blocks s
 
 Visually, the environment adopts a clean and vibrant aesthetic. The color palette is lively, contributing to the overall energetic atmosphere of the game. The simplicity of the outdoor setting complements the fast-paced and strategic gameplay, ensuring that players can easily navigate and focus on the core multiplayer experience.
 
-### 3.8 Sketch of World
-
-*(Insert Sketch Image)*
-
-### 3.9 Menus
+### Menus
 
 Upon launching the game, players are greeted by a visually appealing and straightforward initial menu screen. The BomberMania logo takes center stage, exuding a sense of energy and anticipation. Surrounding the logo are menu options presented in a clean and easily readable font, ensuring accessibility for players of all levels.
 
@@ -107,7 +95,7 @@ BomberMania employs a straightforward and accessible control scheme designed to 
 
 Players automatically move at a standard pace. There is no specific "Run" function. The primary action is to strategically place bombs using the designated key (Spacebar for Player 1, Enter for Player 2). The strategic placement of bombs is the key mechanic for both offensive and defensive strategies. The game maintains a consistent pace, with no dedicated "Fast" or "Slow" controls. The dynamics of the gameplay naturally intensify as players strategically navigate the arena, place bombs, and engage in multiplayer battles.
 
-### 3.11 Sounds
+### Sounds
 
 BomberMania offers a rich auditory experience, immersing players in a world where every action resonates with distinctive sounds. The carefully curated soundscape complements the gameplay, enhancing the overall atmosphere and providing audio cues essential to strategic decision-making.
 
