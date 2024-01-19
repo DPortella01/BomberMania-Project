@@ -123,9 +123,10 @@ BomberMania offers a rich auditory experience, immersing players in a world wher
 - **Menu Interactions:**
   Navigating through menus is accompanied by subtle button press sounds, providing tactile feedback to players as they navigate options and customize their gaming experience.
 
+---
 
 ## Summary
----
+
 BomberMania invites you to a riveting gaming experience where nostalgia meets innovation in explosive multiplayer battles. Immerse yourself in dynamic arenas, strategically placing bombs to outwit opponents and emerge as the last bomber standing. With a classic 2D visual style reminiscent of the iconic Bomberman, the game introduces modern twists, keeping the essence of the past while embracing the energy of the present.
 
 Engage in thrilling multiplayer mayhem with intuitive controls, captivating background music, and a meticulously crafted soundscape that enhances every strategic move. Customize your bomber's appearance, unlock power-ups, and adapt your tactics as you progress through diverse levels filled with destructible blocks.
