@@ -1,9 +1,12 @@
 # BomberMania
+---
 
 ## Executive Summary
 
+
 **BomberMania** is a thrilling multiplayer arcade game inspired by the classic Bomberman. Developed using C++ and SFML, the game focuses exclusively on multiplayer experiences, offering fast-paced and strategic gameplay. Players engage in explosive battles, strategically placing bombs to outwit opponents and claim victory. With a vibrant and dynamic environment, BomberMania brings nostalgia to a new level, delivering an engaging and competitive multiplayer experience.
 
+---
 ## Game Description
 
 ### Overview
@@ -67,7 +70,7 @@ Upon launching the game, players are greeted by a visually appealing and straigh
 - **How to Play:**
   The "How to Play" option offers a concise yet comprehensive guide, providing players with an overview of the game's controls, objectives, and power-ups. This section caters to both newcomers and seasoned players, ensuring everyone is on the same explosive page.
 
-### 3.10 Controls
+### Controls
 
 BomberMania employs a straightforward and accessible control scheme designed to accommodate both Player 1 and Player 2, each utilizing a standard keyboard setup. The controls are intuitively mapped to ensure a seamless and enjoyable gaming experience.
 
@@ -119,6 +122,8 @@ BomberMania offers a rich auditory experience, immersing players in a world wher
 
 - **Menu Interactions:**
   Navigating through menus is accompanied by subtle button press sounds, providing tactile feedback to players as they navigate options and customize their gaming experience.
+
+---
 
 ## Summary
 
