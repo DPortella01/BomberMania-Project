@@ -14,6 +14,8 @@ Texture Entities    ../assets/Textures/Entities.png
 Texture Jungle      ../assets/Textures/Jungle-long.png
 Texture Finish      ../assets/Textures/FinishLine.png
 Texture Explosion   ../assets/Textures/Explosion.png
+Texture SpriteSheet	../assets/Textures/SpriteSheet.png
+Texture TileSet		../assets/Textures/TileSet.png
 
 # Sprites
 Sprite background		Jungle   0 0  1024 5600
@@ -21,7 +23,14 @@ Sprite finishLine		Finish   0 0  1024 76
 Sprite EagleStr			Entities 0  0 48 64
 Sprite EagleLft			Entities 48 0 48 64
 Sprite EagleRgt			Entities 96 0 48 64
+Sprite BombermanUp		SpriteSheet	16 96 16 32
+Sprite BombermanDown	SpriteSheet	16  0 16 32
+Sprite BombermanLeft	SpriteSheet	16 32 16 32
+Sprite BombermanRight	SpriteSheet	16 64 16 32
 
+Sprite Missile          Entities 160 64 15 32
+Sprite PlayerBullet     Entities 175 64 3 14
+Sprite EnemyBullet      Entities 178 64 3 14
 
 
 #

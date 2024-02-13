@@ -145,8 +145,8 @@ void Scene_Bomb::playerMovement() {
 	if (pInput.down) pv.y += 1;
 	*/
 
-	if (pv.x == 0 && pv.y == 0)
-		m_player->getComponent<CAnimation>().animation.stop();
+	/*if (pv.x == 0 && pv.y == 0)
+		m_player->getComponent<CAnimation>().animation.stop();*/
 
 	pv = normalize(pv);
 	m_player->getComponent<CTransform>().vel = m_config.playerSpeed * pv;
@@ -236,14 +236,6 @@ void Scene_Bomb::spawnPlayer(sf::Vector2f pos) {
 	m_player->addComponent<CInput>();
 
 	m_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("down"));
-
-	/*
-	auto& sprite = m_player->addComponent<CSprite>().sprite;
-	auto [txtName, txtRect] = Assets::getInstance().getSprt("BombermanDown");
-	sprite.setTexture(Assets::getInstance().getTexture(txtName));
-	sprite.setTextureRect(txtRect);
-	centerOrigin(sprite);
-	*/
 }
 
 
@@ -258,7 +250,7 @@ sf::FloatRect Scene_Bomb::getViewBounds() {
 void Scene_Bomb::sCollisions() {
 	adjustPlayerPosition();
 
-	m_player->getComponent<CAnimation>().animation.m_sprite.setColor(sf::Color::White);
+	//m_player->getComponent<CAnimation>().animation.m_sprite.setColor(sf::Color::White);
 
 	for (auto& tile : m_entityManager.getEntities("Tile"))
 	{
@@ -267,13 +259,13 @@ void Scene_Bomb::sCollisions() {
 			auto overlap = Physics::getOverlap(m_player, tile);
 			if (overlap.x > 0 && overlap.y > 0) // se overlpar em x e y for maior que zero, ele entrou no tile
 			{
-				m_player->getComponent<CAnimation>().animation.m_sprite.setColor(sf::Color::Red);
+				//m_player->getComponent<CAnimation>().animation.m_sprite.setColor(sf::Color::Red);
 
 				// Aqui dentro faz o código pro player não andar.
 				// Usar o overlap
 			}
 
-			int a = 10;
+			//int a = 10;
 		}
 	}
 }
@@ -378,11 +370,17 @@ void Scene_Bomb::loadLevel(const std::string& path) {
 			if (collide == "yes")
 				e->addComponent<CBoundingBox>(sf::Vector2f(16.0f, 16.0f));
 		}
-		/*else if (token == "World") {
+		else if (token == "World") {
 			config >> m_worldBounds.width >> m_worldBounds.height;
-		}*/
+		}
+		else if (token == "ScrollSpeed") {
+			config >> m_config.scrollSpeed;
+		}
 		else if (token == "PlayerSpeed") {
 			config >> m_config.playerSpeed;
+		}
+		else if (token == "EnemySpeed") {
+			config >> m_config.enemySpeed;
 		}
 		else if (token[0] == '#') {
 			std::string tmp;

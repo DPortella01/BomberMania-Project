@@ -175,6 +175,12 @@
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\config.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\Textures\SpriteSheet.json" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

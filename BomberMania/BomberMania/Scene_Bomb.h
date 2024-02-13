@@ -17,9 +17,6 @@ struct LevelConfig {
 	float       scrollSpeed{ 100.f };
 	float       playerSpeed{ 200.f };
 	float       enemySpeed{ 200.f };
-	float       bulletSpeed{ 400.f };
-	float       missileSpeed{ 150.f };
-	sf::Time    fireInterfal{ sf::seconds(5) };
 };
 
 
@@ -41,11 +38,7 @@ private:
 	void            sMovement(sf::Time dt);
 	void            sCollisions();
 	void            sUpdate(sf::Time dt);
-	void            sGunUpdate(sf::Time dt);
 	void            sAnimation(sf::Time dt);
-	void            sGuideMissiles(sf::Time dt);
-	void            sAutoPilot(const sf::Time& dt);
-	void            sDestroyOutsideBattleField();
 
 	void	        onEnd() override;
 
@@ -57,10 +50,6 @@ private:
 
 	void	        registerActions();
 	void            spawnPlayer(sf::Vector2f pos);
-
-	void            fireBullet();
-	void            fireMissile();
-	void            spawnBullet(sf::Vector2f pos, bool isEnemy);
 
 	void            init(const std::string& path);
 	void            loadLevel(const std::string& path);
