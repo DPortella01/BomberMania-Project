@@ -57,6 +57,46 @@ struct CAnimation : public Component {
 
 };
 
+enum class TileType
+{
+    Destructable,
+    None,
+};
+
+struct CTile : public Component
+{
+    CTile() = default;
+    CTile(const TileType& t) : type(t) {}
+
+    TileType type;
+};
+
+struct CBomb : public Component
+{
+    CBomb() : lifespan(sf::seconds(2.0f)), explosionSize(2) {}
+
+    sf::Time lifespan;
+    int explosionSize;
+};
+
+
+enum class PowerUpType
+{
+    IncreaseExplosion = 1,
+    IncreaseBombCount = 2,
+    IncreasePlayerSpeed = 2
+};
+
+struct CPowerUp : public Component
+{
+    CPowerUp() = default;
+    CPowerUp(const PowerUpType& t) : type(t) {}
+
+    PowerUpType type;
+};
+
+
+
 struct CTransform : public Component
 {
 
@@ -130,8 +170,5 @@ struct CScore : public Component
     int score{ 0 };
     CScore(int s = 0) : score(s) {}
 };
-
-//3 CBomb, CExplosion, CBrick, CPlayer2, PowerUp
-
 
 #endif //BREAKOUT_COMPONENTS_H

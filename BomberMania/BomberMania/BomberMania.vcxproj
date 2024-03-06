@@ -176,10 +176,12 @@
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\assets\level1.txt" />
     <Text Include="..\config.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\assets\Textures\SpriteSheet.json" />
+    <None Include="..\assets\Textures\TileSet.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,12 +2,13 @@
 
 Window  1024 768
 
-Font    Arial      ../assets/fonts/arial.ttf
-Font    main       ../assets/fonts/Sansation.ttf
-Font    Arcade    ../assets/fonts/arcadeclassic.regular.ttf
+Font    Arial       ../assets/fonts/arial.ttf
+Font    main        ../assets/fonts/Sansation.ttf
+Font    Arcade		../assets/fonts/arcadeclassic.regular.ttf
+Font    ArcadeBomb  ../assets/fonts/ArcadeBomb.ttf
 
 Music menuTheme     ../assets/Music/MenuTheme.ogg
-Music missionTheme  ../assets/Music/MissionTheme.ogg
+Music gameTheme  ../assets/Music/BomberManiaTheme.ogg
 
 # Textures
 Texture Entities    ../assets/Textures/Entities.png
@@ -18,15 +19,17 @@ Texture SpriteSheet	../assets/Textures/SpriteSheet.png
 Texture TileSet		../assets/Textures/TileSet.png
 
 # Sprites
-Sprite background		Jungle   0 0  1024 5600
-Sprite finishLine		Finish   0 0  1024 76
-Sprite EagleStr			Entities 0  0 48 64
-Sprite EagleLft			Entities 48 0 48 64
-Sprite EagleRgt			Entities 96 0 48 64
-Sprite BombermanUp		SpriteSheet	16 96 16 32
-Sprite BombermanDown	SpriteSheet	16  0 16 32
-Sprite BombermanLeft	SpriteSheet	16 32 16 32
-Sprite BombermanRight	SpriteSheet	16 64 16 32
+Sprite background		Jungle		0  0	1024 5600
+Sprite finishLine		Finish		0  0	1024 76
+Sprite EagleStr			Entities	0  0	48	64
+Sprite EagleLft			Entities	48 0	48 64
+Sprite EagleRgt			Entities	96 0	48 64
+Sprite BombermanUp		SpriteSheet	16 96	16 32
+Sprite BombermanDown	SpriteSheet	16 0	16 32
+Sprite BombermanLeft	SpriteSheet	16 32	16 32
+Sprite BombermanRight	SpriteSheet	16 64	16 32
+Sprite PowerUp1			TileSet		112 96	16 16
+Sprite Brick			TileSet		112 96	16 16
 
 Sprite Missile          Entities 160 64 15 32
 Sprite PlayerBullet     Entities 175 64 3 14
@@ -41,15 +44,35 @@ Sound EnemyGunfire  ../assets/Sound/EnemyGunfire.wav
 Sound Explosion1    ../assets/Sound/Explosion1.wav
 Sound Explosion2    ../assets/Sound/Explosion2.wav
 Sound LaunchMissile ../assets/Sound/LaunchMissile.wav
+Sound PlaceBomb     ../assets/Sound/PlaceBomb.wav
+Sound BombExplodes  ../assets/Sound/BombExplodes.wav
+Sound Walk          ../assets/Sound/Walk.wav
+Sound MenuSound     ../assets/Sound/MenuSound.wav
+Sound ClickMenuSound ../assets/Sound/ClickMenuSound.wav
+
+
 
 
 
 JSON	../assets/Textures/SpriteSheet.json
+JSON	../assets/Textures/TileSet.json
 
-Animation		up		SpriteSheet		4		yes
-Animation		down	SpriteSheet		4		yes
-Animation		left	SpriteSheet		4		yes
-Animation		right	SpriteSheet		4		yes
+Animation		up			SpriteSheet		4		yes
+Animation		down		SpriteSheet		4		yes
+Animation		left		SpriteSheet		4		yes
+Animation		right		SpriteSheet		4		yes
+Animation		brick		TileSet			4		no
+Animation		bomb		TileSet			4		yes
+Animation		fireM		TileSet			4		no
+Animation		fireL		TileSet			4		no
+Animation		fireR		TileSet			4		no
+Animation		fireH		TileSet			4		no
+Animation		fireW		TileSet			4		no
+Animation		fireU		TileSet			4		no
+Animation		fireD		TileSet			4		no
+Animation		powerUp1	TileSet			4		yes
+Animation		powerUp2	TileSet			4		yes
+Animation		powerUp3	TileSet			4		yes
 
 #JSON                ../assets/media/Entities.json
 

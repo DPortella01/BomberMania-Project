@@ -1,0 +1,562 @@
+{
+  "frames": [
+    {
+      "filename": "brick (1)",
+      "frame": {
+        "x": 0,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "brick (2)",
+      "frame": {
+        "x": 16,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "brick (3)",
+      "frame": {
+        "x": 32,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "brick (4)",
+      "frame": {
+        "x": 48,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "brick (5)",
+      "frame": {
+        "x": 64,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "brick (6)",
+      "frame": {
+        "x": 80,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "brick (7)",
+      "frame": {
+        "x": 96,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "bomb (1)",
+      "frame": {
+        "x": 64,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "bomb (2)",
+      "frame": {
+        "x": 80,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "bomb (3)",
+      "frame": {
+        "x": 96,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireM (1)",
+      "frame": {
+        "x": 96,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireM (2)",
+      "frame": {
+        "x": 96,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireM (3)",
+      "frame": {
+        "x": 96,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireM (4)",
+      "frame": {
+        "x": 96,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireM (5)",
+      "frame": {
+        "x": 96,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireM (6)",
+      "frame": {
+        "x": 96,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireM (7)",
+      "frame": {
+        "x": 96,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireW (1)",
+      "frame": {
+        "x": 80,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireW (2)",
+      "frame": {
+        "x": 80,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireW (3)",
+      "frame": {
+        "x": 80,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireW (4)",
+      "frame": {
+        "x": 80,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireW (5)",
+      "frame": {
+        "x": 80,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireW (6)",
+      "frame": {
+        "x": 80,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireW (7)",
+      "frame": {
+        "x": 80,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireL (1)",
+      "frame": {
+        "x": 32,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireL (2)",
+      "frame": {
+        "x": 48,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireL (3)",
+      "frame": {
+        "x": 64,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireL (4)",
+      "frame": {
+        "x": 48,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireL (5)",
+      "frame": {
+        "x": 32,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireL (6)",
+      "frame": {
+        "x": 16,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireL (7)",
+      "frame": {
+        "x": 0,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireR (1)",
+      "frame": {
+        "x": 32,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireR (2)",
+      "frame": {
+        "x": 48,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireR (3)",
+      "frame": {
+        "x": 64,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireR (4)",
+      "frame": {
+        "x": 48,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireR (5)",
+      "frame": {
+        "x": 32,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireR (6)",
+      "frame": {
+        "x": 16,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireR (7)",
+      "frame": {
+        "x": 0,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireU (1)",
+      "frame": {
+        "x": 32,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireU (2)",
+      "frame": {
+        "x": 48,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireU (3)",
+      "frame": {
+        "x": 64,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireU (4)",
+      "frame": {
+        "x": 48,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireU (5)",
+      "frame": {
+        "x": 32,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireU (6)",
+      "frame": {
+        "x": 16,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireU (7)",
+      "frame": {
+        "x": 0,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireD (1)",
+      "frame": {
+        "x": 32,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireD (2)",
+      "frame": {
+        "x": 48,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireD (3)",
+      "frame": {
+        "x": 64,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireD (4)",
+      "frame": {
+        "x": 48,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireD (5)",
+      "frame": {
+        "x": 32,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireD (6)",
+      "frame": {
+        "x": 16,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireD (7)",
+      "frame": {
+        "x": 0,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireH (1)",
+      "frame": {
+        "x": 32,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireH (2)",
+      "frame": {
+        "x": 48,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireH (3)",
+      "frame": {
+        "x": 64,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireH (4)",
+      "frame": {
+        "x": 48,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireH (5)",
+      "frame": {
+        "x": 32,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireH (6)",
+      "frame": {
+        "x": 16,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "fireH (7)",
+      "frame": {
+        "x": 0,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp1 (1)",
+      "frame": {
+        "x": 112,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp2 (2)",
+      "frame": {
+        "x": 128,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp3 (3)",
+      "frame": {
+        "x": 128,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      }
+    }
+  ]
+}

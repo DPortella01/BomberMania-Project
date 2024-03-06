@@ -1,7 +1,3 @@
-//
-// Created by David Burchill on 2023-09-27.
-//
-
 #ifndef BREAKOUT_ENTITY_H
 #define BREAKOUT_ENTITY_H
 
@@ -10,10 +6,9 @@
 #include <string>
 
 #include "Components.h"
-// forward declarations
 class EntityManager;
 
-using ComponentTuple = std::tuple<CShape, CSprite, CAnimation, CState, CTransform, CBoundingBox, CInput, CScore>;
+using ComponentTuple = std::tuple<CShape, CSprite, CAnimation, CTile, CBomb, CPowerUp, CState, CTransform, CBoundingBox, CInput, CScore>;
 
 class Entity {
 private:
@@ -51,7 +46,7 @@ public:
 
 
     template<typename T>
-    inline bool removeComponent() const {
+    inline bool removeComponent() {
         return getComponent<T>().has = false;
     }
 

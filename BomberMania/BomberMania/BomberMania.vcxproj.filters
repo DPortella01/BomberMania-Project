@@ -109,10 +109,16 @@
     <Text Include="..\config.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="..\assets\level1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\assets\Textures\SpriteSheet.json">
-      <Filter>Header Files</Filter>
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\assets\Textures\TileSet.json">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
 </Project>

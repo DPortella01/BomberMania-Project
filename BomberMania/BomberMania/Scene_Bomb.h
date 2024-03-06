@@ -17,6 +17,9 @@ struct LevelConfig {
 	float       scrollSpeed{ 100.f };
 	float       playerSpeed{ 200.f };
 	float       enemySpeed{ 200.f };
+	float       bulletSpeed{ 400.f };
+	float       missileSpeed{ 150.f };
+	sf::Time    fireInterfal{ sf::seconds(5) };
 };
 
 
@@ -46,7 +49,6 @@ private:
 	// helper functions
 	void            playerMovement();
 	void            adjustPlayerPosition();
-	void            checkPlayerState();
 
 	void	        registerActions();
 	void            spawnPlayer(sf::Vector2f pos);
@@ -54,6 +56,23 @@ private:
 	void            init(const std::string& path);
 	void            loadLevel(const std::string& path);
 	sf::FloatRect   getViewBounds();
+
+	void			dropBomb();
+	void			spawnBomb(sf::Vector2f pos);
+	bool			isColliding(sf::Vector2f pos);
+	bool			isDestructable(sf::Vector2f pos);
+	void			destroyDestructableTile(sf::Vector2f pos);
+	void			spawnExplosion(sf::Vector2f pos, int size);
+	void			spawnFire(sf::Vector2f pos, const std::string& animation);
+	void 			spawnPowerUp(sf::Vector2f pos, const std::string& type);
+	void			spawnBrick(sf::Vector2f pos);
+
+	void			spawnRandomBricks();
+
+	void			sBombUpdate(sf::Time dt);
+
+	void			renderEntity(std::shared_ptr<Entity>& e);
+
 
 public:
 
