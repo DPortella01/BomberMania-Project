@@ -7,6 +7,8 @@
 #include "Animation.h"
 #include "Utilities.h"
 
+#include "EntityManager.h"
+
 
 struct Component
 {
@@ -73,12 +75,14 @@ struct CTile : public Component
 
 struct CBomb : public Component
 {
-    CBomb() : lifespan(sf::seconds(2.0f)), explosionSize(2) {}
+    CBomb() : lifespan(sf::seconds(2.0f)), explosionSize(1), isOnBomb(false), player(nullptr) {}
+    CBomb(sPtrEntt playerParameter) : lifespan(sf::seconds(2.0f)), explosionSize(1), isOnBomb(true), player(playerParameter) {}
 
     sf::Time lifespan;
     int explosionSize;
+    bool isOnBomb;
+    sPtrEntt player; // Para verificação de quem está soltando a bomba.
 };
-
 
 enum class PowerUpType
 {
@@ -94,8 +98,6 @@ struct CPowerUp : public Component
 
     PowerUpType type;
 };
-
-
 
 struct CTransform : public Component
 {

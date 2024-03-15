@@ -180,6 +180,7 @@
     <Text Include="..\config.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\assets\Textures\PowerUps.json" />
     <None Include="..\assets\Textures\SpriteSheet.json" />
     <None Include="..\assets\Textures\TileSet.json" />
   </ItemGroup>

@@ -17,6 +17,7 @@ Texture Finish      ../assets/Textures/FinishLine.png
 Texture Explosion   ../assets/Textures/Explosion.png
 Texture SpriteSheet	../assets/Textures/SpriteSheet.png
 Texture TileSet		../assets/Textures/TileSet.png
+Texture PowerUps	../assets/Textures/PowerUps.png
 
 # Sprites
 Sprite background		Jungle		0  0	1024 5600
@@ -28,12 +29,7 @@ Sprite BombermanUp		SpriteSheet	16 96	16 32
 Sprite BombermanDown	SpriteSheet	16 0	16 32
 Sprite BombermanLeft	SpriteSheet	16 32	16 32
 Sprite BombermanRight	SpriteSheet	16 64	16 32
-Sprite PowerUp1			TileSet		112 96	16 16
 Sprite Brick			TileSet		112 96	16 16
-
-Sprite Missile          Entities 160 64 15 32
-Sprite PlayerBullet     Entities 175 64 3 14
-Sprite EnemyBullet      Entities 178 64 3 14
 
 
 #
@@ -56,6 +52,7 @@ Sound ClickMenuSound ../assets/Sound/ClickMenuSound.wav
 
 JSON	../assets/Textures/SpriteSheet.json
 JSON	../assets/Textures/TileSet.json
+JSON	../assets/Textures/PowerUps.json
 
 Animation		up			SpriteSheet		4		yes
 Animation		down		SpriteSheet		4		yes
@@ -70,9 +67,9 @@ Animation		fireH		TileSet			4		no
 Animation		fireW		TileSet			4		no
 Animation		fireU		TileSet			4		no
 Animation		fireD		TileSet			4		no
-Animation		powerUp1	TileSet			4		yes
-Animation		powerUp2	TileSet			4		yes
-Animation		powerUp3	TileSet			4		yes
+Animation		powerUp1	PowerUps		4		yes
+Animation		powerUp2	PowerUps		4		yes
+Animation		powerUp3	PowerUps		4		yes
 
 #JSON                ../assets/media/Entities.json
 

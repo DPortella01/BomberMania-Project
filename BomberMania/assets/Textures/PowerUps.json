@@ -1,0 +1,139 @@
+{
+  "frames": [
+    {
+      "filename": "powerUp1 (1)",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp1 (2)",
+      "frame": {
+        "x": 16,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp1 (3)",
+      "frame": {
+        "x": 32,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp1 (4)",
+      "frame": {
+        "x": 48,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp1 (5)",
+      "frame": {
+        "x": 64,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp2 (1)",
+      "frame": {
+        "x": 0,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp2 (2)",
+      "frame": {
+        "x": 16,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp2 (3)",
+      "frame": {
+        "x": 32,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp2 (4)",
+      "frame": {
+        "x": 48,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp2 (5)",
+      "frame": {
+        "x": 64,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp3 (1)",
+      "frame": {
+        "x": 0,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp3 (2)",
+      "frame": {
+        "x": 16,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp3 (3)",
+      "frame": {
+        "x": 32,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp3 (4)",
+      "frame": {
+        "x": 48,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "filename": "powerUp3 (5)",
+      "frame": {
+        "x": 64,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    }
+  ]
+}

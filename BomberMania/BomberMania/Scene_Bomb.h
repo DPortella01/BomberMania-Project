@@ -16,19 +16,18 @@
 struct LevelConfig {
 	float       scrollSpeed{ 100.f };
 	float       playerSpeed{ 200.f };
-	float       enemySpeed{ 200.f };
-	float       bulletSpeed{ 400.f };
-	float       missileSpeed{ 150.f };
-	sf::Time    fireInterfal{ sf::seconds(5) };
 };
 
 
 class Scene_Bomb : public Scene {
 private:
-	sPtrEntt        m_player{ nullptr };
+	sPtrEntt        m_player1{ nullptr };
+	sPtrEntt        m_player2{ nullptr };
+	sPtrEntt        m_player3{ nullptr };
+	sPtrEntt        m_player4{ nullptr };
+
 	sf::View        m_worldView;
 	sf::FloatRect   m_worldBounds;
-
 
 	LevelConfig     m_config;
 
@@ -36,29 +35,32 @@ private:
 	bool			m_drawAABB{ false };
 	bool			m_drawGrid{ false };
 
+	// PowerUp list
+	int				m_fire = 5;
+	int				m_bomb = 5;
+	int				m_speed = 3;
 
-	//systems
+	// systems
 	void            sMovement(sf::Time dt);
-	void            sCollisions();
+	void            sCollisions(sPtrEntt& playerPtr);
 	void            sUpdate(sf::Time dt);
 	void            sAnimation(sf::Time dt);
 
 	void	        onEnd() override;
 
-
 	// helper functions
-	void            playerMovement();
+	void            playerMovement(sPtrEntt& playerPtr);
 	void            adjustPlayerPosition();
 
 	void	        registerActions();
-	void            spawnPlayer(sf::Vector2f pos);
+	void            spawnPlayer(sPtrEntt& playerPtr, sf::Vector2f pos);
 
 	void            init(const std::string& path);
 	void            loadLevel(const std::string& path);
 	sf::FloatRect   getViewBounds();
 
-	void			dropBomb();
-	void			spawnBomb(sf::Vector2f pos);
+	void			dropBomb(sPtrEntt& player);
+	void			spawnBomb(sPtrEntt& player, sf::Vector2f pos);
 	bool			isColliding(sf::Vector2f pos);
 	bool			isDestructable(sf::Vector2f pos);
 	void			destroyDestructableTile(sf::Vector2f pos);

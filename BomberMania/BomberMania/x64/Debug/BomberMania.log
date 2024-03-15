@@ -1,12 +1,12 @@
 ﻿  Scene_Bomb.cpp
-C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(266,34): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(266,34): warning C4244:         with
-C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(266,34): warning C4244:         [
-C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(266,34): warning C4244:             T=float
-C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(266,34): warning C4244:         ]
-C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(266,27): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(266,27): warning C4244:         with
-C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(266,27): warning C4244:         [
-C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(266,27): warning C4244:             T=float
-C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(266,27): warning C4244:         ]
+C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(286,34): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(286,34): warning C4244:         with
+C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(286,34): warning C4244:         [
+C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(286,34): warning C4244:             T=float
+C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(286,34): warning C4244:         ]
+C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(286,27): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(286,27): warning C4244:         with
+C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(286,27): warning C4244:         [
+C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(286,27): warning C4244:             T=float
+C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\BomberMania\Scene_Bomb.cpp(286,27): warning C4244:         ]
   BomberMania.vcxproj -> C:\SRC\Comprehensive-Development-Project\BomberMania-Project\BomberMania\x64\Debug\BomberMania.exe

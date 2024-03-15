@@ -120,5 +120,8 @@
     <None Include="..\assets\Textures\TileSet.json">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\assets\Textures\PowerUps.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
