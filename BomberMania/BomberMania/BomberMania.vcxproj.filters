@@ -45,16 +45,19 @@
     <ClCompile Include="Scene_Bomb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_Menu.cpp">
+    <ClCompile Include="SoundPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SoundPlayer.cpp">
+    <ClCompile Include="Command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Command.cpp">
+    <ClCompile Include="GamepadManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -104,6 +107,9 @@
     <ClInclude Include="json.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GamepadManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\config.txt">
@@ -114,13 +120,19 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\assets\Textures\SpriteSheet.json">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\assets\Textures\TileSet.json">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\assets\Textures\PowerUps.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\assets\Textures\DeathSheet.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\assets\Textures\SpriteSheet.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\assets\Textures\SpriteSheet2.json">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

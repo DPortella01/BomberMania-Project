@@ -4,6 +4,7 @@
 
 #include "Animation.h"
 #include "Utilities.h"
+#include "Assets.h"
 
 
 Animation::Animation(const std::string& name,
@@ -84,4 +85,9 @@ void Animation::changeFrame()
 {
     m_sprite.setTextureRect(m_frames[m_currentFrame]);
     centerOrigin(m_sprite);
+}
+
+void Animation::changeTexture(const std::string& name)
+{
+    m_sprite.setTexture(Assets::getInstance().getTexture(name));
 }

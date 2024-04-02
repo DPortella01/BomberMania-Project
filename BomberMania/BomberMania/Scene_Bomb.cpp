@@ -23,18 +23,23 @@ Scene_Bomb::Scene_Bomb(GameEngine* gameEngine, const std::string& levelPath)
 
 	m_worldView = sf::View(m_worldBounds);
 
+	//inicia o time com 180 segundos
+	m_time = sf::seconds(180);
+
 	sf::Vector2f spawnPos(48, 32);
-	spawnPlayer(m_player1, spawnPos);
+	spawnPlayer(m_player1, spawnPos, "SpriteSheet");
 
 	spawnPos = sf::Vector2f(224, 176);
-	spawnPlayer(m_player2, spawnPos);
+	spawnPlayer(m_player2, spawnPos, "SpriteSheet2");
 
 	MusicPlayer::getInstance().play("gameTheme");
-	MusicPlayer::getInstance().setVolume(5);
+	MusicPlayer::getInstance().setVolume(20);
 }
 
 
-void Scene_Bomb::init(const std::string& path) {
+void Scene_Bomb::init()
+{
+
 }
 
 void Scene_Bomb::sMovement(sf::Time dt) {
@@ -43,11 +48,15 @@ void Scene_Bomb::sMovement(sf::Time dt) {
 
 	// move all objects
 	for (auto e : m_entityManager.getEntities()) {
+		if (e->getComponent<CState>().state == "dead")
+			return;
+
 		if (e->hasComponent<CTransform>()) {
 			auto& tfm = e->getComponent<CTransform>();
+			auto& pup = e->getComponent<CPlayer>();
 
-			tfm.prevPos = tfm.pos;					// Salva a posição atual como anterior (antiga).
-			tfm.pos += tfm.vel * dt.asSeconds();	// Atualiza a posição atual para a nova.
+			tfm.prevPos = tfm.pos;								// Salva a posição atual como anterior (antiga).
+			tfm.pos += tfm.vel * dt.asSeconds() * pup.speed;    // Atualiza a posição atual para a nova.
 		}
 	}
 }
@@ -58,6 +67,7 @@ void Scene_Bomb::registerActions() {
 	registerAction(sf::Keyboard::Escape, "BACK");
 	registerAction(sf::Keyboard::Q, "QUIT");
 	registerAction(sf::Keyboard::C, "TOGGLE_COLLISION");
+	registerAction(sf::Keyboard::Enter, "GAMEQUIT");
 
 	registerAction(sf::Keyboard::A, "LEFT");
 	registerAction(sf::Keyboard::Left, "LEFT2");
@@ -70,6 +80,21 @@ void Scene_Bomb::registerActions() {
 
 	registerAction(sf::Keyboard::Space, "BOMB");
 	registerAction(sf::Keyboard::Numpad0, "BOMB2");
+
+	registerGamepadAction("0_LS_UP", "UP");
+	registerGamepadAction("0_LS_DOWN", "DOWN");
+	registerGamepadAction("0_LS_LEFT", "LEFT");
+	registerGamepadAction("0_LS_RIGHT", "RIGHT");
+
+	registerGamepadAction("0_DPAD_UP", "UP");
+	registerGamepadAction("0_DPAD_DOWN", "DOWN");
+	registerGamepadAction("0_DPAD_LEFT", "LEFT");
+	registerGamepadAction("0_DPAD_RIGHT", "RIGHT");
+
+	registerGamepadAction("0_A", "BOMB");
+	registerGamepadAction("0_Y", "GAMEQUIT");
+	registerGamepadAction("0_START", "QUIT");
+
 }
 
 
@@ -79,6 +104,7 @@ void Scene_Bomb::onEnd() {
 
 void Scene_Bomb::playerMovement(sPtrEntt& playerPtr) {
 
+
 	// no movement if player is dead
 	if (playerPtr->hasComponent<CState>() && playerPtr->getComponent<CState>().state == "dead")
 		return;
@@ -86,6 +112,8 @@ void Scene_Bomb::playerMovement(sPtrEntt& playerPtr) {
 	// player movement
 	sf::Vector2f pv{ 0.f,0.f };
 	auto& pInput = playerPtr->getComponent<CInput>();
+
+	auto& sprite = playerPtr->getComponent<CPlayer>().sprite;
 
 	//This part is used to change the texture of the player when the left and right arrow keys are pressed
 	if (pInput.up) {
@@ -96,12 +124,14 @@ void Scene_Bomb::playerMovement(sPtrEntt& playerPtr) {
 		if (animation.getName() != "up")
 		{
 			animation = playerPtr->addComponent<CAnimation>(Assets::getInstance().getAnimation("up")).animation;
+			animation.changeTexture(sprite);
 		}
+
 
 
 		animation.play();
 	}
-	if (pInput.down) {
+	else if (pInput.down) {
 		pv.y += 1;
 
 		auto& animation = playerPtr->getComponent<CAnimation>().animation;
@@ -109,11 +139,13 @@ void Scene_Bomb::playerMovement(sPtrEntt& playerPtr) {
 		if (animation.getName() != "down")
 		{
 			animation = playerPtr->addComponent<CAnimation>(Assets::getInstance().getAnimation("down")).animation;
+			animation.changeTexture(sprite);
 		}
+
 
 		animation.play();
 	}
-	if (pInput.left) {
+	else if (pInput.left) {
 		pv.x -= 1;
 
 		auto& animation = playerPtr->getComponent<CAnimation>().animation;
@@ -121,11 +153,13 @@ void Scene_Bomb::playerMovement(sPtrEntt& playerPtr) {
 		if (animation.getName() != "left")
 		{
 			animation = playerPtr->addComponent<CAnimation>(Assets::getInstance().getAnimation("left")).animation;
+			animation.changeTexture(sprite);
 		}
+
 
 		animation.play();
 	}
-	if (pInput.right) {
+	else if (pInput.right) {
 		pv.x += 1;
 
 		auto& animation = playerPtr->getComponent<CAnimation>().animation;
@@ -133,7 +167,9 @@ void Scene_Bomb::playerMovement(sPtrEntt& playerPtr) {
 		if (animation.getName() != "right")
 		{
 			animation = playerPtr->addComponent<CAnimation>(Assets::getInstance().getAnimation("right")).animation;
+			animation.changeTexture(sprite);
 		}
+
 
 
 		animation.play();
@@ -199,15 +235,48 @@ void Scene_Bomb::renderEntity(std::shared_ptr<Entity>& e)
 	}
 }
 
+
+void Scene_Bomb::executeMenuAction(size_t selectedOption) {
+	switch (selectedOption) {
+	case 0: // Play
+		// liberar o jogo pausado
+		m_isPaused = false;
+		break;
+	case 1: // Options
+		// Abrir o menu de opções
+		break;
+	case 2: // How to Play
+		// Abrir instruções de jogo
+		break;
+	case 3: // Quit
+		// Sair do jogo
+		m_game->quitLevel();
+		break;
+	default:
+		// Opção inválida
+		break;
+	}
+}
+
+
 void Scene_Bomb::sRender() {
-	//m_game->window().clear(sf::Color(100, 100, 255));
-	m_game->window().setView(m_worldView);
+	m_game->window().clear();
+	m_game->window().setView(m_worldView); // define o zoom
+
 
 	for (auto& e : m_entityManager.getEntities())
 	{
 		if (e->getTag() == "player") continue;	// pula o player.
+		if (e->getTag() == "Fire") continue;
 
 		renderEntity(e);	// desenhando os tiles (cenário) e as bombas.
+	}
+
+	auto& fires = m_entityManager.getEntities("Fire");
+
+	for (int i = fires.size(); i > 0; i--)
+	{
+		renderEntity(fires[i - 1]);
 	}
 
 	// desenho os players no final e em cima de tudo.
@@ -215,8 +284,372 @@ void Scene_Bomb::sRender() {
 	{
 		renderEntity(e);
 	}
+
+	m_game->window().setView(m_game->window().getDefaultView()); // tira o zoom
+
+	///////////////////////////////////////////////////////////
+	//TIMER
+
+	sf::Text text;
+	text.setFont(Assets::getInstance().getFont("ArcadeBomb"));
+	text.setCharacterSize(24);
+	text.setFillColor(sf::Color(254, 208, 1));
+	text.setOutlineColor(sf::Color::Black);
+	text.setOutlineThickness(1);
+	text.setPosition(740, 10);
+	text.setString("TIME: " + std::to_string(static_cast<int>(m_time.asSeconds())));
+
+	m_game->window().draw(text);
+
+	///////////////////////////////////////////////////////////
+	//SCORE
+
+	 // Crie e configure o texto para exibir a pontuação do jogador 1
+	sf::Text scoreText;
+	scoreText.setFont(Assets::getInstance().getFont("ArcadeBomb"));
+	scoreText.setCharacterSize(24);
+	scoreText.setFillColor(sf::Color::White);
+	scoreText.setOutlineColor(sf::Color::Black);
+	scoreText.setOutlineThickness(1);
+	scoreText.setPosition(20, 10); // Ajuste a posição conforme necessário
+
+	// Atualize o conteúdo do texto para exibir a pontuação atual do jogador 1
+	if (m_player1) {
+		scoreText.setString("Player 1: " + std::to_string(m_player1->getComponent<CScore>().score));
+	}
+	else {
+		scoreText.setString("Player 1: 0");
+	}
+
+	// Renderize o texto da pontuação do jogador 1
+	m_game->window().draw(scoreText);
+
+
+	// Crie e configure o texto para exibir a pontuação do jogador 2
+	sf::Text scoreText2;
+	scoreText2.setFont(Assets::getInstance().getFont("ArcadeBomb"));
+	scoreText2.setCharacterSize(24);
+	scoreText2.setFillColor(sf::Color::White);
+	scoreText2.setOutlineColor(sf::Color::Black);
+	scoreText2.setOutlineThickness(1);
+	scoreText2.setPosition(700, 720); 
+
+	// Atualize o conteúdo do texto para exibir a pontuação atual do jogador 2
+	if (m_player2) {
+		scoreText2.setString("Player 2: " + std::to_string(m_player2->getComponent<CScore>().score));
+	}
+	else {
+		scoreText2.setString("Player 2: 0");
+	}
+
+	// Renderize o texto da pontuação do jogador 2
+	m_game->window().draw(scoreText2);
+
+
+	/////////////////////////////////////////////////////////////
+	////VICTORY SCREEN
+	if (m_finished) {
+		drawVictoryScreen();
+		//add a victory song
+	}
+
+
+	/////////////////////////////////////////////////////////////
+
+	//	//criar um vetor com duas opções que serao usadas como menu: Jogar novamente ou sair do jogo
+	//	std::vector<std::string> menuStrings = {
+	//		"PLAY AGAIN",
+	//		"QUIT"
+	//	};
+
+	//	// Variável para armazenar a posição atual do cursor no menu
+	//	size_t selectedOption = 0;
+
+	//	// Variáveis para armazenar o estado anterior das teclas de seta
+	//	static bool prevUpPressed = false;
+	//	static bool prevDownPressed = false;
+
+	//	// Verifica se a tecla de seta para cima foi pressionada pela primeira vez
+	//	bool upPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !prevUpPressed;
+
+	//	// Verifica se a tecla de seta para baixo foi pressionada pela primeira vez
+	//	bool downPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !prevDownPressed;
+
+	//	// Altera a seleção do menu apenas se a tecla de seta para cima foi pressionada pela primeira vez
+	//	if (upPressed) {
+	//		if (selectedOption > 0) {
+	//			--selectedOption;
+	//		}
+	//	}
+
+	//	// Altera a seleção do menu apenas se a tecla de seta para baixo foi pressionada pela primeira vez
+	//	if (downPressed) {
+	//		if (selectedOption < menuStrings.size() - 1) {
+	//			++selectedOption;
+	//		}
+	//	}
+
+	//	// Verifica se uma tecla de ação foi pressionada (por exemplo, Enter ou Espaço) para executar a ação associada ao item de menu selecionado
+	//	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+	//		// Executar a ação associada ao item de menu selecionado (por exemplo, iniciar o jogo, abrir opções, etc.)
+	//		executeMenuAction(selectedOption);
+	//	}
+
+	//	// Desenhar o texto do menu
+	//	for (size_t i = 0; i < menuStrings.size(); ++i)
+	//	{
+	//		victoryText.setString(menuStrings[i]);
+
+	//		// Ajustar a posição vertical com base no índice da opção
+	//		victoryText.setPosition(
+	//			(m_game->window().getSize().x - victoryText.getLocalBounds().width) / 2.0f,
+	//			(m_game->window().getSize().y - victoryText.getLocalBounds().height) / 2.0f + 300.0f + i * victoryText.getLocalBounds().height * 4.2f
+	//		);
+
+	//		// Se a opção atual for a selecionada, definir sua cor para destacá-la
+	//		if (i == selectedOption) {
+	//			victoryText.setFillColor(sf::Color::Yellow);
+	//		}
+	//		else {
+	//			victoryText.setFillColor(sf::Color::White);
+	//		}
+
+	//		m_game->window().draw(victoryText);
+	//	}
+
+	//	// Atualizar o estado das teclas de seta para a próxima iteração
+	//	prevUpPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
+	//	prevDownPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
+	//  
+
+	//}
+
+
+	
+
+	///////////////////////////////////////////////////////////
+
+	///////////////////////////////////////////////////////////
+	//MENU PAUSE
+
+	if (m_isPaused) {
+		// Pintar a tela de cinza escuro
+		sf::RectangleShape grayScreen(sf::Vector2f(m_game->window().getSize()));
+		grayScreen.setFillColor(sf::Color(24, 24, 24, 200));
+		m_game->window().draw(grayScreen);
+
+		// Carregar a imagem do menu de pausa
+		sf::Texture pauseTexture;
+		pauseTexture.loadFromFile("../assets/Textures/123.png");
+
+		// Criar o sprite do menu de pausa
+		sf::Sprite pauseSprite(pauseTexture);
+
+		// Calcular a escala horizontal e vertical separadamente para ajustar a proporção
+		float scaleX = static_cast<float>(m_game->window().getSize().x) / (pauseSprite.getLocalBounds().width);
+		float scaleY = static_cast<float>(m_game->window().getSize().y) / (pauseSprite.getLocalBounds().height);
+
+		// Escolher o menor fator de escala para manter a proporção da imagem
+		float scaleFactor = std::min(scaleX, scaleY);
+
+		// Limitar a escala para garantir que a imagem não fique muito grande
+		float maxScaleFactor = 0.25f;
+		scaleFactor = std::min(scaleFactor, maxScaleFactor);
+
+		// Aplicar o fator de escala ao sprite do menu de pausa
+		pauseSprite.setScale(scaleFactor, scaleFactor);
+
+		// Calcular a posição para centralizar o sprite do menu de pausa na tela
+		float posX = (m_game->window().getSize().x - pauseSprite.getGlobalBounds().width) / 2.0f;
+		float posY = (m_game->window().getSize().y - pauseSprite.getGlobalBounds().height) / 2.0f;
+
+		// Ajustar a posição para levar em consideração a diferença entre o tamanho da janela e o tamanho da visualização
+		posX += m_game->window().getView().getCenter().x - m_game->window().getSize().x / 2.0f;
+		posY += m_game->window().getView().getCenter().y - m_game->window().getSize().y / 2.0f;
+
+		// Definir a posição do sprite do menu de pausa
+		pauseSprite.setPosition(posX, posY);
+
+		// Desenhar o menu de pausa
+		m_game->window().draw(pauseSprite);
+
+
+		//////////////////////////////////////////////////////
+
+		// Variáveis para armazenar o estado anterior das teclas de seta
+		static bool prevUpPressed = false;
+		static bool prevDownPressed = false;
+
+		// Criar e desenhar o texto do menu
+		sf::Text menuText;
+		menuText.setFont(Assets::getInstance().getFont("ArcadeBomb"));
+		menuText.setCharacterSize(18);
+		menuText.setFillColor(sf::Color::White);
+
+		// Define a escala do texto
+		float textScale = 0.30f; // Altere isso conforme necessário para diminuir a escala da fonte
+		menuText.setScale(sf::Vector2f(textScale, textScale));
+
+		// Definir a posição base dos textos do menu
+		sf::Vector2f baseTextPosition(
+			m_game->window().getView().getCenter().x - menuText.getLocalBounds().width / 2.0f * textScale - 30.0f,
+			m_game->window().getView().getCenter().y - menuText.getLocalBounds().height / 2.0f * textScale - -7.0f
+		);
+
+		// Criar uma lista de strings para o menu de pausa
+		std::vector<std::string> menuStrings = {
+			"RESUME",
+			"OPTIONS",
+			"HOW TO PLAY",
+			"QUIT"
+		};
+
+		// Variável para armazenar a posição atual do cursor no menu
+		size_t selectedOption = 0;
+
+		// Verifica se a tecla de seta para cima foi pressionada pela primeira vez
+		bool upPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !prevUpPressed;
+
+		// Verifica se a tecla de seta para baixo foi pressionada pela primeira vez
+		bool downPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !prevDownPressed;
+
+		// Altera a seleção do menu apenas se a tecla de seta para cima foi pressionada pela primeira vez
+		if (upPressed) {
+			if (selectedOption > 0) {
+				--selectedOption;
+			}
+		}
+
+		// Altera a seleção do menu apenas se a tecla de seta para baixo foi pressionada pela primeira vez
+		if (downPressed) {
+			if (selectedOption < menuStrings.size() - 1) {
+				++selectedOption;
+			}
+		}
+
+		// Verifica se uma tecla de ação foi pressionada (por exemplo, Enter ou Espaço) para executar a ação associada ao item de menu selecionado
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+			// Executar a ação associada ao item de menu selecionado (por exemplo, iniciar o jogo, abrir opções, etc.)
+			executeMenuAction(selectedOption);
+		}
+
+
+		// Desenhar o texto do menu
+		for (size_t i = 0; i < menuStrings.size(); ++i)
+		{
+			menuText.setString(menuStrings[i]);
+
+			// Ajustar a posição vertical com base no índice da opção
+			menuText.setPosition(
+				baseTextPosition.x,
+				baseTextPosition.y + i * menuText.getLocalBounds().height * 4.2f * textScale
+			);
+
+			// Se a opção atual for a selecionada, definir sua cor para destacá-la
+			if (i == selectedOption) {
+				menuText.setFillColor(sf::Color::Yellow);
+			}
+			else {
+				menuText.setFillColor(sf::Color::White);
+			}
+
+			m_game->window().draw(menuText);
+		}
+	}
 }
 
+void Scene_Bomb::drawVictoryScreen()
+{
+	//	// Pintar a tela de cinza escuro
+	sf::RectangleShape grayScreen(sf::Vector2f(m_game->window().getSize()));
+	grayScreen.setFillColor(sf::Color(24, 24, 24, 200));
+	m_game->window().draw(grayScreen);
+
+	// Carregar a imagem de vitória
+	sf::Texture victoryTexture;
+	victoryTexture.loadFromFile("../assets/Textures/victory.png");
+
+	sf::Sprite victorySprite(victoryTexture);
+
+	victorySprite.setScale(0.7f, 0.7f);
+
+	//setar o sprite no meio da tela
+	victorySprite.setPosition(
+		(m_game->window().getSize().x - victorySprite.getGlobalBounds().width) / 2.0f,
+		(m_game->window().getSize().y - victorySprite.getGlobalBounds().height) / 2.0f - 100
+	);
+
+
+	// Desenhar o sprite de vitória
+	m_game->window().draw(victorySprite);
+
+	// Desenhar o texto de player 1 ou player 2 venceu
+	sf::Text victoryText;
+	victoryText.setFont(Assets::getInstance().getFont("ArcadeBomb"));
+	victoryText.setCharacterSize(56);
+	victoryText.setFillColor(sf::Color(210, 46, 56));
+	victoryText.setOutlineColor(sf::Color::Black);
+	victoryText.setOutlineThickness(1);
+
+	if (m_player1->getComponent<CState>().state != "dead" && m_player2->getComponent<CState>().state == "dead") {
+		victoryText.setString("Player 1 Wins!");
+	}
+	else if (m_player2->getComponent<CState>().state != "dead" && m_player1->getComponent<CState>().state == "dead") {
+		victoryText.setString("Player 2 Wins!");
+	}
+	else if (m_player1->getComponent<CState>().state == "dead" && m_player2->getComponent<CState>().state == "dead") {
+		victoryText.setString("Draw!");
+	}
+	else if (m_player1->getComponent<CScore>().score > m_player2->getComponent<CScore>().score) {
+		victoryText.setString("Player 1 Wins!");
+	}
+	else if (m_player1->getComponent<CScore>().score < m_player2->getComponent<CScore>().score) {
+		victoryText.setString("Player 2 Wins!");
+	}
+	else
+	{
+		victoryText.setString("Draw!");
+	}
+
+	victoryText.setPosition(
+		(m_game->window().getSize().x - victoryText.getLocalBounds().width) / 2.0f,
+		(m_game->window().getSize().y - victoryText.getLocalBounds().height) / 2.0 - -50
+	);
+
+	//Desenhar Retry e Quit
+	sf::Text menuText;
+	menuText.setFont(Assets::getInstance().getFont("ArcadeBomb"));
+	menuText.setCharacterSize(30);
+	menuText.setFillColor(sf::Color::White);
+	menuText.setOutlineColor(sf::Color::Black);
+	menuText.setOutlineThickness(1);
+
+	// desenhe o texto do menu
+	std::vector<std::string> menuStrings = {
+		"Play Again: A",
+		"Quit: Y"
+	};
+
+	//desenhem o texto do menu
+	for (size_t i = 0; i < menuStrings.size(); ++i)
+	{
+		menuText.setString(menuStrings[i]);
+
+		// Ajustar a posição vertical com base no índice da opção
+		menuText.setPosition(
+			(m_game->window().getSize().x - menuText.getLocalBounds().width) / 2.0f,
+			(m_game->window().getSize().y - menuText.getLocalBounds().height) / 2.0f + 220.0f + i * menuText.getLocalBounds().height * 2.2f
+		);
+
+		// Se a opção atual for a selecionada, definir sua cor para destacá-la
+	
+		menuText.setFillColor(sf::Color::Yellow);
+
+		m_game->window().draw(menuText);
+	}
+
+	m_game->window().draw(victoryText);
+}
 
 void Scene_Bomb::update(sf::Time dt) {
 	sUpdate(dt);
@@ -225,7 +658,7 @@ void Scene_Bomb::update(sf::Time dt) {
 void Scene_Bomb::sDoAction(const Command& action) {
 	// On Key Press
 	if (action.type() == "START") {
-		if (action.name() == "PAUSE") { setPaused(!m_isPaused); }
+		if (action.name() == "PAUSE") { pause(); }
 		else if (action.name() == "QUIT") { m_game->quitLevel(); }
 		else if (action.name() == "BACK") { m_game->backLevel(); }
 
@@ -239,7 +672,24 @@ void Scene_Bomb::sDoAction(const Command& action) {
 		else if (action.name() == "UP") { m_player1->getComponent<CInput>().up = true; }
 		else if (action.name() == "DOWN") { m_player1->getComponent<CInput>().down = true; }
 
-		else if (action.name() == "BOMB") { dropBomb(m_player1); }
+		else if (action.name() == "BOMB") { 
+			if (m_finished)
+			{
+				m_game->resetLevel();
+				SoundPlayer::getInstance().play("ClickMenuSound");
+			}	
+			else	
+				dropBomb(m_player1); 
+		}
+
+		else if (action.name() == "GAMEQUIT")
+		{
+			if (m_finished)
+			{
+				m_game->quit();
+				SoundPlayer::getInstance().play("ClickMenuSound");
+			}
+		}
 
 		// Player2 control
 		else if (action.name() == "LEFT2") { m_player2->getComponent<CInput>().left = true; }
@@ -264,14 +714,18 @@ void Scene_Bomb::sDoAction(const Command& action) {
 	}
 }
 
-
-void Scene_Bomb::spawnPlayer(sPtrEntt& playerPtr, sf::Vector2f pos) {
+//adicione tbm o novo parametro para definir qual sprite sera usado
+void Scene_Bomb::spawnPlayer(sPtrEntt& playerPtr, sf::Vector2f pos, const std::string& sprite) {
 	playerPtr = m_entityManager.addEntity("player");
 	playerPtr->addComponent<CTransform>(pos);
-	playerPtr->addComponent<CBoundingBox>(sf::Vector2f(16.0f, 16.0f), sf::Vector2f(0.0f, 8.0f));
+	playerPtr->addComponent<CBoundingBox>(sf::Vector2f(15.0f, 15.0f), sf::Vector2f(0.0f, 8.0f));
+	//adicionar o compononent de score
+	playerPtr->addComponent<CScore>();
 	playerPtr->addComponent<CInput>();
+	playerPtr->addComponent<CPlayer>().sprite = sprite;
 
-	playerPtr->addComponent<CAnimation>(Assets::getInstance().getAnimation("down"));
+	auto& animation = playerPtr->addComponent<CAnimation>(Assets::getInstance().getAnimation("down")).animation;
+	animation.changeTexture(sprite);
 }
 
 void Scene_Bomb::dropBomb(sPtrEntt& player)
@@ -285,10 +739,19 @@ void Scene_Bomb::dropBomb(sPtrEntt& player)
 	// Tranformar grid em pixel
 	sf::Vector2f np((x * 16) + 8, y * 16); // O +8 em x é para ajustar a posição da bomba pq a origem é no centro.
 
-	//o player so pode soltar uma bomba por vez
-	if (m_entityManager.getEntities("Bomb").size() < 1)
+	auto& powerUp = player->getComponent<CPlayer>();
+
+	// Se o total de bombas for maior que quantas ele já soltou no mapa;
+	if (powerUp.bomb > powerUp.droped)
 	{
+		for (auto& e : m_entityManager.getEntities("Bomb"))
+		{
+			if (e->getComponent<CBomb>().isOnBomb == true)
+				return;
+		}
+
 		spawnBomb(player, np);
+		powerUp.droped++;
 	}
 }
 
@@ -301,7 +764,8 @@ void Scene_Bomb::spawnBomb(sPtrEntt& player, sf::Vector2f pos)
 	bomb->addComponent<CTransform>(pos);
 	bomb->addComponent<CBoundingBox>(sf::Vector2f(16, 16));
 	SoundPlayer::getInstance().play("PlaceBomb");
-	bomb->addComponent<CBomb>(player);
+	bomb->addComponent<CBomb>();
+	bomb->addComponent<COwner>(player);
 
 	//de o play na animacao
 	bomb->getComponent<CAnimation>().animation.play();
@@ -321,10 +785,19 @@ bool Scene_Bomb::isColliding(sf::Vector2f pos) {
 			}
 		}
 	}
+	for (auto& e : m_entityManager.getEntities("Bomb")) {
+		if (e->hasComponent<CBoundingBox>()) {
+			auto& tile = e->getComponent<CTransform>().pos;
+			if (pos == tile) {
+				e->getComponent<CBomb>().lifespan = sf::Time::Zero;
+				return true;
+			}
+		}
+	}
 	return false;
 }
 
-void Scene_Bomb::destroyDestructableTile(sf::Vector2f pos) {
+void Scene_Bomb::destroyDestructableTile(sf::Vector2f pos, sPtrEntt& player) {
 	for (auto& e : m_entityManager.getEntities("Tile")) {
 		if (e->hasComponent<CBoundingBox>()) {
 			auto& tile = e->getComponent<CTransform>().pos;
@@ -334,6 +807,8 @@ void Scene_Bomb::destroyDestructableTile(sf::Vector2f pos) {
 				if (tileType == TileType::Destructable) {
 					e->removeComponent<CSprite>();
 					e->addComponent<CAnimation>(Assets::getInstance().getAnimation("brick")).animation.play();
+
+					player->getComponent<CScore>().score += 100;
 
 					std::uniform_int_distribution percentage(0, 100);
 					if (percentage(rng) <= 15)
@@ -365,10 +840,14 @@ void Scene_Bomb::destroyDestructableTile(sf::Vector2f pos) {
 	}
 }
 
-void Scene_Bomb::spawnExplosion(sf::Vector2f pos, int size)
+void Scene_Bomb::spawnExplosion(sPtrEntt& bomb)
 {
+	sf::Vector2f pos = bomb->getComponent<CTransform>().pos;
+	auto& player = bomb->getComponent<COwner>().owner;
+	int size = player->getComponent<CPlayer>().fire;
+
 	//FIRE MIDDLE (fireM)
-	spawnFire(pos, "fireM");
+	spawnFire(pos, "fireM", player);
 
 	sf::Vector2f nPos = pos;
 	//FIRE LEFT
@@ -377,13 +856,13 @@ void Scene_Bomb::spawnExplosion(sf::Vector2f pos, int size)
 		nPos.x -= 16;
 		if (isColliding(nPos))
 		{
-			destroyDestructableTile(nPos);
+			destroyDestructableTile(nPos, player);
 			break;
 		}
 		if (i == size - 1)
-			spawnFire(nPos, "fireL"); //FireL
+			spawnFire(nPos, "fireL", player); //FireL
 		else
-			spawnFire(nPos, "fireW"); //FireW
+			spawnFire(nPos, "fireW", player); //FireW
 	}
 
 	//FIRE RIGHT
@@ -393,13 +872,13 @@ void Scene_Bomb::spawnExplosion(sf::Vector2f pos, int size)
 		nPos.x += 16;
 		if (isColliding(nPos))
 		{
-			destroyDestructableTile(nPos);
+			destroyDestructableTile(nPos, player);
 			break;
 		}
 		if (i == size - 1)
-			spawnFire(nPos, "fireR"); // FireR
+			spawnFire(nPos, "fireR", player); // FireR
 		else
-			spawnFire(nPos, "fireW"); // FireW
+			spawnFire(nPos, "fireW", player); // FireW
 	}
 
 	//FIRE UP
@@ -409,13 +888,13 @@ void Scene_Bomb::spawnExplosion(sf::Vector2f pos, int size)
 		nPos.y -= 16;
 		if (isColliding(nPos))
 		{
-			destroyDestructableTile(nPos);
+			destroyDestructableTile(nPos, player);
 			break;
 		}
 		if (i == size - 1)
-			spawnFire(nPos, "fireU"); // FireU
+			spawnFire(nPos, "fireU", player); // FireU
 		else
-			spawnFire(nPos, "fireH"); // FireH
+			spawnFire(nPos, "fireH", player); // FireH
 
 	}
 
@@ -426,22 +905,23 @@ void Scene_Bomb::spawnExplosion(sf::Vector2f pos, int size)
 		nPos.y += 16;
 		if (isColliding(nPos))
 		{
-			destroyDestructableTile(nPos);
+			destroyDestructableTile(nPos, player);
 			break;
 		}
 		if (i == size - 1)
-			spawnFire(nPos, "fireD"); // FireD
+			spawnFire(nPos, "fireD", player); // FireD
 		else
-			spawnFire(nPos, "fireH"); // FireH
+			spawnFire(nPos, "fireH", player); // FireH
 	}
 }
 
-void Scene_Bomb::spawnFire(sf::Vector2f pos, const std::string& animation)
+void Scene_Bomb::spawnFire(sf::Vector2f pos, const std::string& animation, sPtrEntt& player)
 {
 	auto e = m_entityManager.addEntity("Fire");
 	auto& anim = e->addComponent<CAnimation>(Assets::getInstance().getAnimation(animation));
 	e->addComponent<CTransform>(pos);
-	e->addComponent<CBoundingBox>(sf::Vector2f(16, 16));
+	e->addComponent<CBoundingBox>(sf::Vector2f(14, 14));
+	e->addComponent<COwner>(player);
 
 	SoundPlayer::getInstance().play("BombExplodes");
 
@@ -471,6 +951,16 @@ void Scene_Bomb::spawnBrick(sf::Vector2f pos)
 	auto e = m_entityManager.addEntity("Brick");
 	e->addComponent<CTransform>(pos);
 	e->addComponent<CAnimation>(Assets::getInstance().getAnimation("brick"));
+	e->addComponent<CBoundingBox>(sf::Vector2f(16, 16));
+
+	e->getComponent<CAnimation>().animation.play();
+}
+
+void Scene_Bomb::spawnDeath(sf::Vector2f pos)
+{
+	auto e = m_entityManager.addEntity("Death");
+	e->addComponent<CTransform>(pos);
+	e->addComponent<CAnimation>(Assets::getInstance().getAnimation("death"));
 	e->addComponent<CBoundingBox>(sf::Vector2f(16, 16));
 
 	e->getComponent<CAnimation>().animation.play();
@@ -576,7 +1066,7 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 		auto& isOnBomb = bomb->getComponent<CBomb>().isOnBomb;
 		if (isOnBomb)
 		{
-			auto& bombPlayer = bomb->getComponent<CBomb>().player; // BombPlayer é o player que soltou essa bomba.
+			auto& bombPlayer = bomb->getComponent<COwner>().owner; // BombPlayer é o player que soltou essa bomba.
 			auto overlapBP = Physics::getOverlap(bombPlayer, bomb); // Overlap do Bomb Player.
 
 			// Ele está, verificamos quando ele sair trocamos o isOnBomb para false.
@@ -617,7 +1107,7 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 
 	// PLAYER AND POWERUP
 	// TODO
-	for(auto& powerUp : m_entityManager.getEntities("PowerUp"))
+	for (auto& powerUp : m_entityManager.getEntities("PowerUp"))
 	{
 		auto overlap = Physics::getOverlap(playerPtr, powerUp);
 		auto prevOverlap = Physics::getPreviousOverlap(playerPtr, powerUp);
@@ -627,15 +1117,18 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 			auto& powerUpType = powerUp->getComponent<CAnimation>().animation.getName();
 			if (powerUpType == "powerUp1")
 			{
-				m_fire++;
+				playerPtr->getComponent<CPlayer>().fire++;
+				SoundPlayer::getInstance().play("PowerUp");
 			}
 			else if (powerUpType == "powerUp2")
 			{
-				m_bomb++;
+				playerPtr->getComponent<CPlayer>().bomb++;
+				SoundPlayer::getInstance().play("PowerUp");
 			}
 			else if (powerUpType == "powerUp3")
 			{
-				m_speed++;
+				playerPtr->getComponent<CPlayer>().speed += 0.2f;
+				SoundPlayer::getInstance().play("PowerUp");
 			}
 			powerUp->destroy();
 		}
@@ -659,42 +1152,66 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 
 
 	// FIRE AND PLAYER
-	// TODO
+	for (auto& fire : m_entityManager.getEntities("Fire"))
+	{
+		auto overlap = Physics::getOverlap(playerPtr, fire);
+		auto prevOverlap = Physics::getPreviousOverlap(playerPtr, fire);
 
+		if (overlap.x > 0 && overlap.y > 0)
+		{
 
-	// FIRE AND BRICK COLLISION
-	/*
-	for (auto& explosion : m_entityManager.getEntities("Fire")) {
-		for (auto& tile : m_entityManager.getEntities("Tile")) {
-			if (tile->hasComponent<CBoundingBox>()) {
-				auto overlapExplosionTile = Physics::getOverlap(explosion, tile);
-				auto prevOverlapExplosionTile = Physics::getPreviousOverlap(explosion, tile);
+			if (playerPtr->getComponent<CState>().state != "dead")
+			{
+				auto& animation = playerPtr->addComponent<CAnimation>(Assets::getInstance().getAnimation("death")).animation;
+				animation.changeTexture(playerPtr->getComponent<CPlayer>().sprite);
+				animation.play();
 
-				// Lógica de colisão entre explosões (fire) e tijolos (bricks)
-				if (overlapExplosionTile.x > 0 && overlapExplosionTile.y > 0)
-				{
-					if (tile->getComponent<CTile>().type == TileType::Destructable)
-					{
-						tile->removeComponent<CSprite>(); // Destrua o tijolo
-						auto& animation = tile->addComponent<CAnimation>(Assets::getInstance().getAnimation("brick")).animation;
-						animation.play();
-					}
-				}
+				SoundPlayer::getInstance().play("Audience");
+
+				MusicPlayer::getInstance().play("victoryTheme");
+				MusicPlayer::getInstance().setVolume(20);
+
+				playerPtr->addComponent<CState>("dead");
 			}
 		}
 	}
-	*/
+
+	//FIRE AND BOMB
+	//for (auto& fire : m_entityManager.getEntities("Fire"))
+	//{
+	//	for (auto& bomb : m_entityManager.getEntities("Bomb"))
+	//	{
+	//		auto overlap = Physics::getOverlap(fire, bomb);
+	//		auto prevOverlap = Physics::getPreviousOverlap(fire, bomb);
+
+	//		if (overlap.x > 0 && overlap.y > 0)
+	//		{
+	//			//zerar o lifespan da bomba
+	//			bomb->getComponent<CBomb>().lifespan = sf::Time::Zero;
+	//		}
+	//	}
+	//}
+
 }
 
 
 void Scene_Bomb::sUpdate(sf::Time dt) {
 	SoundPlayer::getInstance().removeStoppedSounds();
 
-	if (m_isPaused)
+	if (m_isPaused || m_finished)
 		return;
+	//m_worldView.move(0.f, m_config.scrollSpeed * dt.asSeconds() * -1);
+
+	//inicia o m_time com 180 segundos e decrementa a cada segundo
+	m_time -= dt;
+
+	if (m_time <= sf::Time::Zero)
+	{
+		m_finished = true;
+		m_time = sf::Time::Zero;
+	}
 
 	m_entityManager.update();
-	//m_worldView.move(0.f, m_config.scrollSpeed * dt.asSeconds() * -1);
 
 	SoundPlayer::getInstance().removeStoppedSounds();
 	adjustPlayerPosition();
@@ -721,8 +1238,10 @@ void Scene_Bomb::sBombUpdate(sf::Time dt)
 
 		if (lifespan <= sf::Time::Zero)
 		{
+			e->getComponent<COwner>().owner->getComponent<CPlayer>().droped--; // diminui a contagem de bombas no mapa
 			e->destroy();
-			spawnExplosion(e->getComponent<CTransform>().pos, e->getComponent<CBomb>().explosionSize);
+			//auto& player = e->getComponent<COwner>().owner;
+			spawnExplosion(e);
 		}
 	}
 }
@@ -741,6 +1260,15 @@ void Scene_Bomb::sAnimation(sf::Time dt)
 			{
 				if (anim.animation.hasEnded())
 					e->destroy();
+			}
+
+			if (e->getComponent<CState>().state == "dead")
+			{
+				if (anim.animation.hasEnded())
+				{
+					e->destroy();
+					m_finished = true;
+				}
 			}
 		}
 	}
@@ -837,4 +1365,11 @@ void Scene_Bomb::loadLevel(const std::string& path) {
 	}
 
 	config.close();
+}
+
+bool Scene_Bomb::checkPlayerVictory()
+{
+	return m_player1->getComponent<CState>().state == "dead" ||
+		m_player2->getComponent<CState>().state == "dead" ||
+		m_time <= sf::Time::Zero;
 }

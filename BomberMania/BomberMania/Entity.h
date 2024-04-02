@@ -8,7 +8,7 @@
 #include "Components.h"
 class EntityManager;
 
-using ComponentTuple = std::tuple<CShape, CSprite, CAnimation, CTile, CBomb, CPowerUp, CState, CTransform, CBoundingBox, CInput, CScore>;
+using ComponentTuple = std::tuple<CShape, CSprite, CAnimation, CTile, CBomb, CPlayer, CState, CTransform, CBoundingBox, CInput, CScore, COwner>;
 
 class Entity {
 private:

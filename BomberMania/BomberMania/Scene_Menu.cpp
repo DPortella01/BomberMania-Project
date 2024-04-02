@@ -57,7 +57,7 @@ void Scene_Menu::update(sf::Time dt)
 void Scene_Menu::sRender()
 {
 	// Configurar a visão
-	sf::View view = m_game->window().getView();
+	sf::View view = m_game->window().getDefaultView();
 	view.setCenter(m_game->window().getSize().x / 2.f, m_game->window().getSize().y / 2.f);
 
 	m_game->window().setView(view);

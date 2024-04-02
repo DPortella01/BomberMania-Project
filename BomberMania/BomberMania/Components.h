@@ -75,28 +75,33 @@ struct CTile : public Component
 
 struct CBomb : public Component
 {
-    CBomb() : lifespan(sf::seconds(2.0f)), explosionSize(1), isOnBomb(false), player(nullptr) {}
+    CBomb() : lifespan(sf::seconds(2.0f)), explosionSize(1), isOnBomb(true), player(nullptr) {}
     CBomb(sPtrEntt playerParameter) : lifespan(sf::seconds(2.0f)), explosionSize(1), isOnBomb(true), player(playerParameter) {}
 
     sf::Time lifespan;
     int explosionSize;
     bool isOnBomb;
-    sPtrEntt player; // Para verificação de quem está soltando a bomba.
+    sPtrEntt player; // Para verifica??o de quem est? soltando a bomba.
 };
 
-enum class PowerUpType
+struct COwner : public Component
 {
-    IncreaseExplosion = 1,
-    IncreaseBombCount = 2,
-    IncreasePlayerSpeed = 2
+    COwner() = default;
+    COwner(sPtrEntt player) : owner(player) {}
+
+    sPtrEntt owner;
 };
 
-struct CPowerUp : public Component
+struct CPlayer : public Component
 {
-    CPowerUp() = default;
-    CPowerUp(const PowerUpType& t) : type(t) {}
+    CPlayer() : fire(1), bomb(1), speed(1.0f), droped(0) {}
 
-    PowerUpType type;
+    int fire;   // tamanho da explos?o
+    int bomb;   // quantas bombas ele pode soltar no total
+    float speed;  // velocidade do player
+
+    std::string sprite;
+    int droped; // quantas bombas ele j? soltou na fase
 };
 
 struct CTransform : public Component
@@ -163,14 +168,16 @@ struct CInput : public Component
     bool right{ false };
     bool down{ false };
 
+
     CInput() = default;
 };
 
 
 struct CScore : public Component
 {
+    CScore() = default;
+
     int score{ 0 };
-    CScore(int s = 0) : score(s) {}
 };
 
 #endif //BREAKOUT_COMPONENTS_H

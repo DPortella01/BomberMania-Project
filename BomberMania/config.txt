@@ -2,22 +2,24 @@
 
 Window  1024 768
 
-Font    Arial       ../assets/fonts/arial.ttf
-Font    main        ../assets/fonts/Sansation.ttf
-Font    Arcade		../assets/fonts/arcadeclassic.regular.ttf
-Font    ArcadeBomb  ../assets/fonts/ArcadeBomb.ttf
+Font    Arial			../assets/fonts/arial.ttf
+Font    main			../assets/fonts/Sansation.ttf
+Font    Arcade			../assets/fonts/arcadeclassic.regular.ttf
+Font    ArcadeBomb		../assets/fonts/ArcadeBomb.ttf
 
-Music menuTheme     ../assets/Music/MenuTheme.ogg
-Music gameTheme  ../assets/Music/BomberManiaTheme.ogg
+Music menuTheme			../assets/Music/opening.ogg
+Music gameTheme			../assets/Music/BomberManiaTheme.ogg
+Music victoryTheme		../assets/Music/Victory.ogg
 
 # Textures
-Texture Entities    ../assets/Textures/Entities.png
-Texture Jungle      ../assets/Textures/Jungle-long.png
-Texture Finish      ../assets/Textures/FinishLine.png
-Texture Explosion   ../assets/Textures/Explosion.png
-Texture SpriteSheet	../assets/Textures/SpriteSheet.png
-Texture TileSet		../assets/Textures/TileSet.png
-Texture PowerUps	../assets/Textures/PowerUps.png
+Texture Entities		../assets/Textures/Entities.png
+Texture Jungle			../assets/Textures/Jungle-long.png
+Texture Finish			../assets/Textures/FinishLine.png
+Texture Explosion		../assets/Textures/Explosion.png
+Texture SpriteSheet		../assets/Textures/SpriteSheet.png
+Texture SpriteSheet2	../assets/Textures/SpriteSheet2.png
+Texture TileSet			../assets/Textures/TileSet.png
+Texture PowerUps		../assets/Textures/PowerUps.png
 
 # Sprites
 Sprite background		Jungle		0  0	1024 5600
@@ -34,57 +36,41 @@ Sprite Brick			TileSet		112 96	16 16
 
 #
 # SOUNDS
-Sound AlliedGunfire ../assets/Sound/AlliedGunfire.wav
-Sound CollectPickup ../assets/Sound/CollectPickup.wav
-Sound EnemyGunfire  ../assets/Sound/EnemyGunfire.wav
-Sound Explosion1    ../assets/Sound/Explosion1.wav
-Sound Explosion2    ../assets/Sound/Explosion2.wav
-Sound LaunchMissile ../assets/Sound/LaunchMissile.wav
-Sound PlaceBomb     ../assets/Sound/PlaceBomb.wav
-Sound BombExplodes  ../assets/Sound/BombExplodes.wav
-Sound Walk          ../assets/Sound/Walk.wav
-Sound MenuSound     ../assets/Sound/MenuSound.wav
-Sound ClickMenuSound ../assets/Sound/ClickMenuSound.wav
+Sound AlliedGunfire		../assets/Sound/AlliedGunfire.wav
+Sound CollectPickup		../assets/Sound/CollectPickup.wav
+Sound EnemyGunfire		../assets/Sound/EnemyGunfire.wav
+Sound Explosion1		../assets/Sound/Explosion1.wav
+Sound Explosion2		../assets/Sound/Explosion2.wav
+Sound LaunchMissile		../assets/Sound/LaunchMissile.wav
+Sound PlaceBomb			../assets/Sound/PlaceBomb.wav
+Sound BombExplodes		../assets/Sound/BombExplodes.wav
+Sound Walk				../assets/Sound/Walk.wav
+Sound MenuSound			../assets/Sound/MenuSound.wav
+Sound ClickMenuSound	../assets/Sound/ClickMenuSound.wav
+Sound PowerUp			../assets/Sound/PowerUp.wav
+Sound Audience			../assets/Sound/Audience.wav
 
 
+JSON					../assets/Textures/SpriteSheet.json
+JSON					../assets/Textures/TileSet.json
+JSON					../assets/Textures/PowerUps.json
 
-
-
-JSON	../assets/Textures/SpriteSheet.json
-JSON	../assets/Textures/TileSet.json
-JSON	../assets/Textures/PowerUps.json
 
 Animation		up			SpriteSheet		4		yes
 Animation		down		SpriteSheet		4		yes
 Animation		left		SpriteSheet		4		yes
 Animation		right		SpriteSheet		4		yes
-Animation		brick		TileSet			4		no
+Animation		death		SpriteSheet		6		no
+
+Animation		brick		TileSet			12		no
 Animation		bomb		TileSet			4		yes
-Animation		fireM		TileSet			4		no
-Animation		fireL		TileSet			4		no
-Animation		fireR		TileSet			4		no
-Animation		fireH		TileSet			4		no
-Animation		fireW		TileSet			4		no
-Animation		fireU		TileSet			4		no
-Animation		fireD		TileSet			4		no
-Animation		powerUp1	PowerUps		4		yes
-Animation		powerUp2	PowerUps		4		yes
-Animation		powerUp3	PowerUps		4		yes
-
-#JSON                ../assets/media/Entities.json
-
-#
-#  Animation    Name            Texture     Speed   Repeats
-#Animation       EagleStr        Entities    1        yes
-#Animation       EagleRgt        Entities    1        yes
-#Animation       EagleLft        Entities    1        yes
-#Animation       Bullet          Entities    1        yes
-#Animation       Missile         Entities    1        yes
-#Animation       explosion       Entities    12       no
-#Animation       FireRate        Entities    1        yes
-#Animation       FireSpread      Entities    1        yes
-#Animation       HealthRefill    Entities    1        yes
-#Animation       MissileRefill   Entities    1        yes
-#Animation       Particle        Entities    1        yes
-#Animation       Raptor          Entities    1        yes
-#Animation       Avenger         Entities    1        yes
+Animation		fireM		TileSet			10		no
+Animation		fireL		TileSet			10		no
+Animation		fireR		TileSet			10		no
+Animation		fireH		TileSet			10		no
+Animation		fireW		TileSet			10		no
+Animation		fireU		TileSet			10		no
+Animation		fireD		TileSet			10		no
+Animation		powerUp1	PowerUps		8		yes
+Animation		powerUp2	PowerUps		8		yes
+Animation		powerUp3	PowerUps		8		yes

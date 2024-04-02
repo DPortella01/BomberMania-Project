@@ -43,11 +43,15 @@ public:
 	void				run();
 	void				quitLevel();
 	void				backLevel();
+	void				resetLevel();
+
 
 	sf::RenderWindow& window();
 
 	sf::Vector2f		windowSize() const;
 	bool				isRunning();
+
+	void				pause();
 
 };
 

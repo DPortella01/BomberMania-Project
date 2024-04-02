@@ -26,6 +26,9 @@ private:
 	sPtrEntt        m_player3{ nullptr };
 	sPtrEntt        m_player4{ nullptr };
 
+	sf::Time		m_time;
+	bool			m_finished = false;
+
 	sf::View        m_worldView;
 	sf::FloatRect   m_worldBounds;
 
@@ -53,30 +56,37 @@ private:
 	void            adjustPlayerPosition();
 
 	void	        registerActions();
-	void            spawnPlayer(sPtrEntt& playerPtr, sf::Vector2f pos);
-
-	void            init(const std::string& path);
+	//adicionar um terceiro parametro no player para definir qual sprite sera usado
+	void            spawnPlayer(sPtrEntt& playerPtr, sf::Vector2f pos, const std::string& sprite);
+	void            init();
 	void            loadLevel(const std::string& path);
+	void            resetLevel(const std::string& path);
 	sf::FloatRect   getViewBounds();
 
 	void			dropBomb(sPtrEntt& player);
 	void			spawnBomb(sPtrEntt& player, sf::Vector2f pos);
 	bool			isColliding(sf::Vector2f pos);
 	bool			isDestructable(sf::Vector2f pos);
-	void			destroyDestructableTile(sf::Vector2f pos);
-	void			spawnExplosion(sf::Vector2f pos, int size);
-	void			spawnFire(sf::Vector2f pos, const std::string& animation);
+	void			destroyDestructableTile(sf::Vector2f pos, sPtrEntt& player);
+	void			spawnExplosion(sPtrEntt& bomb);
+	void			spawnFire(sf::Vector2f pos, const std::string& animation, sPtrEntt& player);
 	void 			spawnPowerUp(sf::Vector2f pos, const std::string& type);
 	void			spawnBrick(sf::Vector2f pos);
-
+	void			spawnDeath(sf::Vector2f pos);
 	void			spawnRandomBricks();
 
 	void			sBombUpdate(sf::Time dt);
 
 	void			renderEntity(std::shared_ptr<Entity>& e);
 
+	void			executeMenuAction(size_t selectedOption);
+
+	void			drawVictoryScreen();
+	bool			checkPlayerVictory();
 
 public:
+
+	void			initMenu();
 
 	Scene_Bomb(GameEngine* gameEngine, const std::string& levelPath);
 

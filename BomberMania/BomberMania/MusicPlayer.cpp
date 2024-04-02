@@ -7,8 +7,9 @@
 
 
 MusicPlayer::MusicPlayer() {
-    m_filenames["menuTheme"] = "../assets/Music/MenuTheme.ogg";
+    m_filenames["menuTheme"] = "../assets/Music/opening.ogg";
     m_filenames["gameTheme"] = "../assets/Music/BomberManiaTheme.ogg";
+    m_filenames["victoryTheme"] = "../assets/Music/Victory.ogg";
 }
 
 void MusicPlayer::addSong(const std::string& name, const std::string& path) {

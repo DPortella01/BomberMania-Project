@@ -6,6 +6,7 @@
 #include <fstream>
 #include <memory>
 #include <cstdlib>
+#include "GamepadManager.h"
 
 
 GameEngine::GameEngine(const std::string& path)
@@ -22,7 +23,7 @@ void GameEngine::init(const std::string& path)
 	loadConfigFromFile(path, width, height);
 
 
-	m_window.create(sf::VideoMode(width, height), "BomberMania", sf::Style::Fullscreen);
+	m_window.create(sf::VideoMode(width, height), "BomberMania");
 
 	m_statisticsText.setFont(Assets::getInstance().getFont("main"));
 	m_statisticsText.setPosition(15.0f, 5.0f);
@@ -83,6 +84,14 @@ void GameEngine::sUserInput()
 				currentScene()->doAction(Command(currentScene()->getActionMap().at(event.key.code), actionType));
 			}
 		}
+
+		GamepadManager::getInstance().handleEvent(event);
+	}
+
+	for (auto& [action, type] : GamepadManager::getInstance().getActions())
+	{
+		if (currentScene()->getGamepadMap().contains(action))
+			currentScene()->doAction(Command(currentScene()->getGamepadMap().at(action), type));
 	}
 }
 
@@ -136,6 +145,10 @@ void GameEngine::run()
 
 		currentScene()->sRender();					// render world
 
+		//GamepadManager::getInstance().drawDebugInfo(&m_window);	// draw gamepad debug info
+
+		//usar o testjoystick button para verificar se o botao foi pressionado
+		//GamepadManager::getInstance().testJoystickButtons(m_window, 0);
 		// draw stats
 		// display
 		window().display();
@@ -151,6 +164,9 @@ void GameEngine::backLevel() {
 
 }
 
+void GameEngine::resetLevel() {
+	changeScene("PLAY", std::make_shared<Scene_Bomb>(this, "../assets/level1.txt"), true);
+}
 
 sf::RenderWindow& GameEngine::window()
 {
@@ -166,3 +182,4 @@ bool GameEngine::isRunning()
 {
 	return (m_running && m_window.isOpen());
 }
+

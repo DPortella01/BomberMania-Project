@@ -149,6 +149,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="GamepadManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MusicPlayer.cpp" />
     <ClCompile Include="Physics.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="GamepadManager.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="MusicPlayer.h" />
     <ClInclude Include="Physics.h" />
@@ -180,8 +182,10 @@
     <Text Include="..\config.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\assets\Textures\DeathSheet.json" />
     <None Include="..\assets\Textures\PowerUps.json" />
     <None Include="..\assets\Textures\SpriteSheet.json" />
+    <None Include="..\assets\Textures\SpriteSheet2.json" />
     <None Include="..\assets\Textures\TileSet.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

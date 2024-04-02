@@ -32,6 +32,7 @@ public:
     void                    stop();
 
     void                    changeFrame();
+    void                    changeTexture(const std::string& name);
 };
 
 
