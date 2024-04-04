@@ -803,9 +803,9 @@ void Scene_Bomb::destroyDestructableTile(sf::Vector2f pos, sPtrEntt& player) {
 					player->getComponent<CScore>().score += 100;
 
 					std::uniform_int_distribution percentage(0, 100);
-					if (percentage(rng) <= 100)
+					if (percentage(rng) <= 15)
 					{
-						std::uniform_int_distribution powerUpGenerator(2, 2);
+						std::uniform_int_distribution powerUpGenerator(1, 3);
 						int powerUp = powerUpGenerator(rng);
 
 						if (powerUp == 1 && m_fire > 0)
