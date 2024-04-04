@@ -15,8 +15,6 @@ Scene_Menu::Scene_Menu(GameEngine* gameEngine)
 	init();
 }
 
-
-
 void Scene_Menu::init()
 {
 	registerAction(sf::Keyboard::W, "UP");
@@ -26,6 +24,16 @@ void Scene_Menu::init()
 	registerAction(sf::Keyboard::D, "PLAY");
 	registerAction(sf::Keyboard::Escape, "QUIT");
 
+	registerGamepadAction("0_LS_UP", "UP");
+	registerGamepadAction("0_LS_DOWN", "DOWN");
+
+	registerGamepadAction("0_DPAD_UP", "UP");
+	registerGamepadAction("0_DPAD_DOWN", "DOWN");
+
+	registerGamepadAction("0_B0", "PLAY"); // X
+	registerGamepadAction("0_B7", "PLAY"); // Y
+	registerGamepadAction("0_B3", "QUIT"); // START
+
 	m_menuStrings.push_back("Play");
 	m_menuStrings.push_back("Options");
 	m_menuStrings.push_back("How To Play");
@@ -34,8 +42,7 @@ void Scene_Menu::init()
 	m_levelPaths.push_back("../assets/level1.txt");
 	m_levelPaths.push_back("../assets/level1.txt");
 	m_levelPaths.push_back("../assets/level1.txt");
-	m_levelPaths.push_back("../assets/level1.txt");
-
+	m_levelPaths.push_back("");
 
 	m_menuText.setFont(Assets::getInstance().getFont("ArcadeBomb"));
 
@@ -44,15 +51,12 @@ void Scene_Menu::init()
 
 	//add music to the menu
 	MusicPlayer::getInstance().play("menuTheme");
-
-
 }
 
 void Scene_Menu::update(sf::Time dt)
 {
 	m_entityManager.update();
 }
-
 
 void Scene_Menu::sRender()
 {
@@ -115,24 +119,22 @@ void Scene_Menu::sRender()
 	//m_game->window().display();
 }
 
-
-
-
 void Scene_Menu::sDoAction(const Command& action)
 {
 	if (action.type() == "START")
 	{
-		if (action.name() == "UP")
+		if (action.name() == "UP" && !m_upInput)
 		{
 			m_menuIndex = (m_menuIndex + m_menuStrings.size() - 1) % m_menuStrings.size();
 			//setar som quando o menu muda
 			SoundPlayer::getInstance().play("MenuSound");
+			m_upInput = true;
 		}
-		else if (action.name() == "DOWN")
+		else if (action.name() == "DOWN" && !m_downInput)
 		{
 			m_menuIndex = (m_menuIndex + 1) % m_menuStrings.size();
 			SoundPlayer::getInstance().play("MenuSound");
-
+			m_downInput = true;
 		}
 		else if (action.name() == "PLAY")
 		{
@@ -143,8 +145,17 @@ void Scene_Menu::sDoAction(const Command& action)
 		{
 			onEnd();
 			SoundPlayer::getInstance().play("MenuSound");
-
 		}
 	}
-
+	else if (action.type() == "END")
+	{
+		if (action.name() == "UP")
+		{
+			m_upInput = false;
+		}
+		else if (action.name() == "DOWN")
+		{
+			m_downInput = false;
+		}
+	}
 }

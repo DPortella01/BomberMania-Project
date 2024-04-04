@@ -14,7 +14,7 @@ private:
 		sf::Vector2f dpad;
 	};
 
-	GamepadManager() = default;
+	GamepadManager();
 	~GamepadManager() = default;
 
 public:
@@ -26,15 +26,14 @@ public:
 	GamepadManager& operator=(GamepadManager&&) = delete;
 
 private:
-	std::vector<std::string> debug;
-
-	Gamepad gamepad;
+	std::vector<Gamepad> gamepads;
 	GamepadActions actions;
+	GamepadActions debugActions;
 
 public:
 	void handleEvent(const sf::Event& event);
 	void drawDebugInfo(sf::RenderTarget* target);
-	void testJoystickButtons(sf::RenderWindow& window, unsigned int joystickId);
 
 	GamepadActions getActions() const;
+	void clearActions();
 };

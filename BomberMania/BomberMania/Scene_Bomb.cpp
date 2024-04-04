@@ -36,7 +36,6 @@ Scene_Bomb::Scene_Bomb(GameEngine* gameEngine, const std::string& levelPath)
 	MusicPlayer::getInstance().setVolume(20);
 }
 
-
 void Scene_Bomb::init()
 {
 
@@ -60,7 +59,6 @@ void Scene_Bomb::sMovement(sf::Time dt) {
 		}
 	}
 }
-
 
 void Scene_Bomb::registerActions() {
 	registerAction(sf::Keyboard::P, "PAUSE");
@@ -91,20 +89,30 @@ void Scene_Bomb::registerActions() {
 	registerGamepadAction("0_DPAD_LEFT", "LEFT");
 	registerGamepadAction("0_DPAD_RIGHT", "RIGHT");
 
-	registerGamepadAction("0_A", "BOMB");
-	registerGamepadAction("0_Y", "GAMEQUIT");
-	registerGamepadAction("0_START", "QUIT");
+	registerGamepadAction("0_B0", "BOMB"); // X
+	registerGamepadAction("0_B3", "GAMEQUIT"); // Y
+	registerGamepadAction("0_B7", "BACK"); // START
 
+	registerGamepadAction("1_LS_UP", "UP2");
+	registerGamepadAction("1_LS_DOWN", "DOWN2");
+	registerGamepadAction("1_LS_LEFT", "LEFT2");
+	registerGamepadAction("1_LS_RIGHT", "RIGHT2");
+
+	registerGamepadAction("1_DPAD_UP", "UP2");
+	registerGamepadAction("1_DPAD_DOWN", "DOWN2");
+	registerGamepadAction("1_DPAD_LEFT", "LEFT2");
+	registerGamepadAction("1_DPAD_RIGHT", "RIGHT2");
+
+	registerGamepadAction("1_B0", "BOMB2"); // X
+	registerGamepadAction("1_B3", "GAMEQUIT"); // Y
+	registerGamepadAction("1_B7", "BACK"); // START
 }
-
 
 void Scene_Bomb::onEnd() {
 	m_game->changeScene("MENU", nullptr, false);
 }
 
 void Scene_Bomb::playerMovement(sPtrEntt& playerPtr) {
-
-
 	// no movement if player is dead
 	if (playerPtr->hasComponent<CState>() && playerPtr->getComponent<CState>().state == "dead")
 		return;
@@ -127,8 +135,6 @@ void Scene_Bomb::playerMovement(sPtrEntt& playerPtr) {
 			animation.changeTexture(sprite);
 		}
 
-
-
 		animation.play();
 	}
 	else if (pInput.down) {
@@ -141,7 +147,6 @@ void Scene_Bomb::playerMovement(sPtrEntt& playerPtr) {
 			animation = playerPtr->addComponent<CAnimation>(Assets::getInstance().getAnimation("down")).animation;
 			animation.changeTexture(sprite);
 		}
-
 
 		animation.play();
 	}
@@ -156,7 +161,6 @@ void Scene_Bomb::playerMovement(sPtrEntt& playerPtr) {
 			animation.changeTexture(sprite);
 		}
 
-
 		animation.play();
 	}
 	else if (pInput.right) {
@@ -169,8 +173,6 @@ void Scene_Bomb::playerMovement(sPtrEntt& playerPtr) {
 			animation = playerPtr->addComponent<CAnimation>(Assets::getInstance().getAnimation("right")).animation;
 			animation.changeTexture(sprite);
 		}
-
-
 
 		animation.play();
 	}
@@ -194,9 +196,7 @@ void Scene_Bomb::playerMovement(sPtrEntt& playerPtr) {
 
 	pv = normalize(pv);
 	playerPtr->getComponent<CTransform>().vel = m_config.playerSpeed * pv;
-
 }
-
 
 void Scene_Bomb::renderEntity(std::shared_ptr<Entity>& e)
 {
@@ -235,7 +235,6 @@ void Scene_Bomb::renderEntity(std::shared_ptr<Entity>& e)
 	}
 }
 
-
 void Scene_Bomb::executeMenuAction(size_t selectedOption) {
 	switch (selectedOption) {
 	case 0: // Play
@@ -257,7 +256,6 @@ void Scene_Bomb::executeMenuAction(size_t selectedOption) {
 		break;
 	}
 }
-
 
 void Scene_Bomb::sRender() {
 	m_game->window().clear();
@@ -324,7 +322,6 @@ void Scene_Bomb::sRender() {
 	// Renderize o texto da pontuação do jogador 1
 	m_game->window().draw(scoreText);
 
-
 	// Crie e configure o texto para exibir a pontuação do jogador 2
 	sf::Text scoreText2;
 	scoreText2.setFont(Assets::getInstance().getFont("ArcadeBomb"));
@@ -332,7 +329,7 @@ void Scene_Bomb::sRender() {
 	scoreText2.setFillColor(sf::Color::White);
 	scoreText2.setOutlineColor(sf::Color::Black);
 	scoreText2.setOutlineThickness(1);
-	scoreText2.setPosition(700, 720); 
+	scoreText2.setPosition(700, 720);
 
 	// Atualize o conteúdo do texto para exibir a pontuação atual do jogador 2
 	if (m_player2) {
@@ -345,14 +342,12 @@ void Scene_Bomb::sRender() {
 	// Renderize o texto da pontuação do jogador 2
 	m_game->window().draw(scoreText2);
 
-
 	/////////////////////////////////////////////////////////////
 	////VICTORY SCREEN
 	if (m_finished) {
 		drawVictoryScreen();
 		//add a victory song
 	}
-
 
 	/////////////////////////////////////////////////////////////
 
@@ -422,10 +417,7 @@ void Scene_Bomb::sRender() {
 	//	prevDownPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
 	//  
 
-	//}
-
-
-	
+	//}	
 
 	///////////////////////////////////////////////////////////
 
@@ -533,7 +525,6 @@ void Scene_Bomb::sRender() {
 			executeMenuAction(selectedOption);
 		}
 
-
 		// Desenhar o texto do menu
 		for (size_t i = 0; i < menuStrings.size(); ++i)
 		{
@@ -578,7 +569,6 @@ void Scene_Bomb::drawVictoryScreen()
 		(m_game->window().getSize().x - victorySprite.getGlobalBounds().width) / 2.0f,
 		(m_game->window().getSize().y - victorySprite.getGlobalBounds().height) / 2.0f - 100
 	);
-
 
 	// Desenhar o sprite de vitória
 	m_game->window().draw(victorySprite);
@@ -642,7 +632,7 @@ void Scene_Bomb::drawVictoryScreen()
 		);
 
 		// Se a opção atual for a selecionada, definir sua cor para destacá-la
-	
+
 		menuText.setFillColor(sf::Color::Yellow);
 
 		m_game->window().draw(menuText);
@@ -672,14 +662,16 @@ void Scene_Bomb::sDoAction(const Command& action) {
 		else if (action.name() == "UP") { m_player1->getComponent<CInput>().up = true; }
 		else if (action.name() == "DOWN") { m_player1->getComponent<CInput>().down = true; }
 
-		else if (action.name() == "BOMB") { 
+		else if (action.name() == "BOMB") {
 			if (m_finished)
 			{
 				m_game->resetLevel();
 				SoundPlayer::getInstance().play("ClickMenuSound");
-			}	
-			else	
-				dropBomb(m_player1); 
+			}
+			else
+			{
+				dropBomb(m_player1);
+			}
 		}
 
 		else if (action.name() == "GAMEQUIT")
@@ -811,9 +803,9 @@ void Scene_Bomb::destroyDestructableTile(sf::Vector2f pos, sPtrEntt& player) {
 					player->getComponent<CScore>().score += 100;
 
 					std::uniform_int_distribution percentage(0, 100);
-					if (percentage(rng) <= 15)
+					if (percentage(rng) <= 100)
 					{
-						std::uniform_int_distribution powerUpGenerator(1, 3);
+						std::uniform_int_distribution powerUpGenerator(2, 2);
 						int powerUp = powerUpGenerator(rng);
 
 						if (powerUp == 1 && m_fire > 0)
@@ -928,7 +920,6 @@ void Scene_Bomb::spawnFire(sf::Vector2f pos, const std::string& animation, sPtrE
 	anim.animation.play();
 }
 
-
 sf::FloatRect Scene_Bomb::getViewBounds() {
 	auto view = m_game->window().getView();
 	return sf::FloatRect(
@@ -965,7 +956,6 @@ void Scene_Bomb::spawnDeath(sf::Vector2f pos)
 
 	e->getComponent<CAnimation>().animation.play();
 }
-
 
 void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 	adjustPlayerPosition();
@@ -1048,7 +1038,6 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 						pos.x -= overlap.x;
 				}
 			}
-
 		}
 	}
 
@@ -1150,7 +1139,6 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 		}
 	}
 
-
 	// FIRE AND PLAYER
 	for (auto& fire : m_entityManager.getEntities("Fire"))
 	{
@@ -1191,9 +1179,7 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 	//		}
 	//	}
 	//}
-
 }
-
 
 void Scene_Bomb::sUpdate(sf::Time dt) {
 	SoundPlayer::getInstance().removeStoppedSounds();
@@ -1227,7 +1213,6 @@ void Scene_Bomb::sUpdate(sf::Time dt) {
 
 	sBombUpdate(dt);
 }
-
 
 void Scene_Bomb::sBombUpdate(sf::Time dt)
 {
@@ -1274,11 +1259,9 @@ void Scene_Bomb::sAnimation(sf::Time dt)
 	}
 }
 
-
 void Scene_Bomb::adjustPlayerPosition() {
 	auto center = m_worldView.getCenter();
 	sf::Vector2f viewHalfSize = m_worldView.getSize() / 2.f;
-
 
 	auto left = center.x - viewHalfSize.x;
 	auto right = center.x + viewHalfSize.x;

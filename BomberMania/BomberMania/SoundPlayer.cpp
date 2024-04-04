@@ -49,6 +49,7 @@ void SoundPlayer::play(String effect, sf::Vector2f position) {
     sound.setPosition(position.x, 0.f, -position.y);   // sounds are in the plane
     sound.setAttenuation(Attenuation);
     sound.setMinDistance(MinDistance3D);
+    sound.setVolume(60);
 
     sound.play();
 }

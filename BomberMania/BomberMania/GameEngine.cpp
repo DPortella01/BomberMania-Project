@@ -8,13 +8,11 @@
 #include <cstdlib>
 #include "GamepadManager.h"
 
-
 GameEngine::GameEngine(const std::string& path)
 {
 	Assets::getInstance().loadFromFile("../config.txt");
 	init(path);
 }
-
 
 void GameEngine::init(const std::string& path)
 {
@@ -22,8 +20,8 @@ void GameEngine::init(const std::string& path)
 	unsigned int height;
 	loadConfigFromFile(path, width, height);
 
-
-	m_window.create(sf::VideoMode(width, height), "BomberMania");
+	//deixar a janela em modo de tela cheia
+	m_window.create(sf::VideoMode(width, height), "BomberMania", sf::Style::Fullscreen);
 
 	m_statisticsText.setFont(Assets::getInstance().getFont("main"));
 	m_statisticsText.setPosition(15.0f, 5.0f);
@@ -62,10 +60,8 @@ void GameEngine::loadConfigFromFile(const std::string& path, unsigned int& width
 
 void GameEngine::update()
 {
-
 	//sUserInput();
 	//currentScene()->update();
-
 }
 
 void GameEngine::sUserInput()
@@ -85,14 +81,19 @@ void GameEngine::sUserInput()
 			}
 		}
 
+		// Enche a fila
 		GamepadManager::getInstance().handleEvent(event);
 	}
 
+	// Processo toda a fila
 	for (auto& [action, type] : GamepadManager::getInstance().getActions())
 	{
 		if (currentScene()->getGamepadMap().contains(action))
 			currentScene()->doAction(Command(currentScene()->getGamepadMap().at(action), type));
 	}
+
+	// Reseto a fila
+	GamepadManager::getInstance().clearActions();
 }
 
 std::shared_ptr<Scene> GameEngine::currentScene()
@@ -102,8 +103,6 @@ std::shared_ptr<Scene> GameEngine::currentScene()
 
 void GameEngine::changeScene(const std::string& sceneName, std::shared_ptr<Scene> scene, bool endCurrentScene)
 {
-
-
 	if (endCurrentScene) {
 		// remove scene from map
 		m_sceneMap.erase(m_currentScene);
@@ -177,9 +176,7 @@ sf::Vector2f GameEngine::windowSize() const {
 	return sf::Vector2f{ m_window.getSize() };
 }
 
-
 bool GameEngine::isRunning()
 {
 	return (m_running && m_window.isOpen());
 }
-

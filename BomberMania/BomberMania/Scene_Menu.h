@@ -11,6 +11,8 @@ private:
 	int							m_menuIndex{ 0 };
 	std::string					m_title;
 
+	bool						m_upInput = false;
+	bool						m_downInput = false;
 
 	void init();
 	void onEnd() override;
@@ -22,7 +24,4 @@ public:
 
 	void sRender() override;
 	void sDoAction(const Command& action) override;
-
-
 };
-
