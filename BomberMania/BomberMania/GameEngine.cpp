@@ -20,7 +20,6 @@ void GameEngine::init(const std::string& path)
 	unsigned int height;
 	loadConfigFromFile(path, width, height);
 
-	//deixar a janela em modo de tela cheia
 	m_window.create(sf::VideoMode(width, height), "BomberMania", sf::Style::Fullscreen);
 
 	m_statisticsText.setFont(Assets::getInstance().getFont("main"));
@@ -81,18 +80,18 @@ void GameEngine::sUserInput()
 			}
 		}
 
-		// Enche a fila
+		//Fill the queue
 		GamepadManager::getInstance().handleEvent(event);
 	}
 
-	// Processo toda a fila
+	// Process the entire queue
 	for (auto& [action, type] : GamepadManager::getInstance().getActions())
 	{
 		if (currentScene()->getGamepadMap().contains(action))
 			currentScene()->doAction(Command(currentScene()->getGamepadMap().at(action), type));
 	}
 
-	// Reseto a fila
+	//Reset the actions
 	GamepadManager::getInstance().clearActions();
 }
 

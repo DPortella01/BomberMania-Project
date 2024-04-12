@@ -23,7 +23,7 @@ Scene_Bomb::Scene_Bomb(GameEngine* gameEngine, const std::string& levelPath)
 
 	m_worldView = sf::View(m_worldBounds);
 
-	//inicia o time com 180 segundos
+	//Initiate the time with 180 seconds
 	m_time = sf::seconds(180);
 
 	sf::Vector2f spawnPos(48, 32);
@@ -177,20 +177,6 @@ void Scene_Bomb::playerMovement(sPtrEntt& playerPtr) {
 		animation.play();
 	}
 
-	/*
-	else {
-		// Optionally, reset the sprite to the default when the left arrow key is not pressed
-		auto& sprite = playerPtr->getComponent<CSprite>().sprite;
-		auto [txtName, txtRect] = Assets::getInstance().getSprt("EagleStr");
-		sprite.setTexture(Assets::getInstance().getTexture(txtName));
-		sprite.setTextureRect(txtRect);
-		centerOrigin(sprite);
-	}
-
-	if (pInput.up) pv.y -= 1;
-	if (pInput.down) pv.y += 1;
-	*/
-
 	if (pv.x == 0 && pv.y == 0)
 		playerPtr->getComponent<CAnimation>().animation.stop();
 
@@ -238,36 +224,36 @@ void Scene_Bomb::renderEntity(std::shared_ptr<Entity>& e)
 void Scene_Bomb::executeMenuAction(size_t selectedOption) {
 	switch (selectedOption) {
 	case 0: // Play
-		// liberar o jogo pausado
+		// release the paused game
 		m_isPaused = false;
 		break;
 	case 1: // Options
-		// Abrir o menu de opções
+		//Open the options menu
 		break;
 	case 2: // How to Play
-		// Abrir instruções de jogo
+		// Open game instructions
 		break;
 	case 3: // Quit
-		// Sair do jogo
+		// Quit the game
 		m_game->quitLevel();
 		break;
 	default:
-		// Opção inválida
+		// Invalid option
 		break;
 	}
 }
 
 void Scene_Bomb::sRender() {
 	m_game->window().clear();
-	m_game->window().setView(m_worldView); // define o zoom
+	m_game->window().setView(m_worldView); // defines the zoom
 
 
 	for (auto& e : m_entityManager.getEntities())
 	{
-		if (e->getTag() == "player") continue;	// pula o player.
+		if (e->getTag() == "player") continue;	// skips the player.
 		if (e->getTag() == "Fire") continue;
 
-		renderEntity(e);	// desenhando os tiles (cenário) e as bombas.
+		renderEntity(e);	// drawing the players and the bomb.
 	}
 
 	auto& fires = m_entityManager.getEntities("Fire");
@@ -277,13 +263,13 @@ void Scene_Bomb::sRender() {
 		renderEntity(fires[i - 1]);
 	}
 
-	// desenho os players no final e em cima de tudo.
+	// draw the plzyers at the end and on top of everything.
 	for (auto& e : m_entityManager.getEntities("player"))
 	{
 		renderEntity(e);
 	}
 
-	m_game->window().setView(m_game->window().getDefaultView()); // tira o zoom
+	m_game->window().setView(m_game->window().getDefaultView());
 
 	///////////////////////////////////////////////////////////
 	//TIMER
@@ -302,16 +288,16 @@ void Scene_Bomb::sRender() {
 	///////////////////////////////////////////////////////////
 	//SCORE
 
-	 // Crie e configure o texto para exibir a pontuação do jogador 1
+	// Create and configure the text to display player 1's score
 	sf::Text scoreText;
 	scoreText.setFont(Assets::getInstance().getFont("ArcadeBomb"));
 	scoreText.setCharacterSize(24);
 	scoreText.setFillColor(sf::Color::White);
 	scoreText.setOutlineColor(sf::Color::Black);
 	scoreText.setOutlineThickness(1);
-	scoreText.setPosition(20, 10); // Ajuste a posição conforme necessário
+	scoreText.setPosition(20, 10);
 
-	// Atualize o conteúdo do texto para exibir a pontuação atual do jogador 1
+	//Update the content of the text to display the current score of player 1
 	if (m_player1) {
 		scoreText.setString("Player 1: " + std::to_string(m_player1->getComponent<CScore>().score));
 	}
@@ -319,10 +305,10 @@ void Scene_Bomb::sRender() {
 		scoreText.setString("Player 1: 0");
 	}
 
-	// Renderize o texto da pontuação do jogador 1
+	//Render the text of player 1's score
 	m_game->window().draw(scoreText);
 
-	// Crie e configure o texto para exibir a pontuação do jogador 2
+	//Create and configure the text to display player 2's score
 	sf::Text scoreText2;
 	scoreText2.setFont(Assets::getInstance().getFont("ArcadeBomb"));
 	scoreText2.setCharacterSize(24);
@@ -331,7 +317,7 @@ void Scene_Bomb::sRender() {
 	scoreText2.setOutlineThickness(1);
 	scoreText2.setPosition(700, 720);
 
-	// Atualize o conteúdo do texto para exibir a pontuação atual do jogador 2
+	// Update the content of the text to display the current score of player 2
 	if (m_player2) {
 		scoreText2.setString("Player 2: " + std::to_string(m_player2->getComponent<CScore>().score));
 	}
@@ -339,7 +325,7 @@ void Scene_Bomb::sRender() {
 		scoreText2.setString("Player 2: 0");
 	}
 
-	// Renderize o texto da pontuação do jogador 2
+	//Render the text of player 2's score
 	m_game->window().draw(scoreText2);
 
 	/////////////////////////////////////////////////////////////
@@ -349,146 +335,59 @@ void Scene_Bomb::sRender() {
 		//add a victory song
 	}
 
-	/////////////////////////////////////////////////////////////
-
-	//	//criar um vetor com duas opções que serao usadas como menu: Jogar novamente ou sair do jogo
-	//	std::vector<std::string> menuStrings = {
-	//		"PLAY AGAIN",
-	//		"QUIT"
-	//	};
-
-	//	// Variável para armazenar a posição atual do cursor no menu
-	//	size_t selectedOption = 0;
-
-	//	// Variáveis para armazenar o estado anterior das teclas de seta
-	//	static bool prevUpPressed = false;
-	//	static bool prevDownPressed = false;
-
-	//	// Verifica se a tecla de seta para cima foi pressionada pela primeira vez
-	//	bool upPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !prevUpPressed;
-
-	//	// Verifica se a tecla de seta para baixo foi pressionada pela primeira vez
-	//	bool downPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !prevDownPressed;
-
-	//	// Altera a seleção do menu apenas se a tecla de seta para cima foi pressionada pela primeira vez
-	//	if (upPressed) {
-	//		if (selectedOption > 0) {
-	//			--selectedOption;
-	//		}
-	//	}
-
-	//	// Altera a seleção do menu apenas se a tecla de seta para baixo foi pressionada pela primeira vez
-	//	if (downPressed) {
-	//		if (selectedOption < menuStrings.size() - 1) {
-	//			++selectedOption;
-	//		}
-	//	}
-
-	//	// Verifica se uma tecla de ação foi pressionada (por exemplo, Enter ou Espaço) para executar a ação associada ao item de menu selecionado
-	//	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-	//		// Executar a ação associada ao item de menu selecionado (por exemplo, iniciar o jogo, abrir opções, etc.)
-	//		executeMenuAction(selectedOption);
-	//	}
-
-	//	// Desenhar o texto do menu
-	//	for (size_t i = 0; i < menuStrings.size(); ++i)
-	//	{
-	//		victoryText.setString(menuStrings[i]);
-
-	//		// Ajustar a posição vertical com base no índice da opção
-	//		victoryText.setPosition(
-	//			(m_game->window().getSize().x - victoryText.getLocalBounds().width) / 2.0f,
-	//			(m_game->window().getSize().y - victoryText.getLocalBounds().height) / 2.0f + 300.0f + i * victoryText.getLocalBounds().height * 4.2f
-	//		);
-
-	//		// Se a opção atual for a selecionada, definir sua cor para destacá-la
-	//		if (i == selectedOption) {
-	//			victoryText.setFillColor(sf::Color::Yellow);
-	//		}
-	//		else {
-	//			victoryText.setFillColor(sf::Color::White);
-	//		}
-
-	//		m_game->window().draw(victoryText);
-	//	}
-
-	//	// Atualizar o estado das teclas de seta para a próxima iteração
-	//	prevUpPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
-	//	prevDownPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
-	//  
-
-	//}	
-
-	///////////////////////////////////////////////////////////
 
 	///////////////////////////////////////////////////////////
 	//MENU PAUSE
 
 	if (m_isPaused) {
-		// Pintar a tela de cinza escuro
 		sf::RectangleShape grayScreen(sf::Vector2f(m_game->window().getSize()));
 		grayScreen.setFillColor(sf::Color(24, 24, 24, 200));
 		m_game->window().draw(grayScreen);
 
-		// Carregar a imagem do menu de pausa
 		sf::Texture pauseTexture;
 		pauseTexture.loadFromFile("../assets/Textures/123.png");
 
-		// Criar o sprite do menu de pausa
 		sf::Sprite pauseSprite(pauseTexture);
 
-		// Calcular a escala horizontal e vertical separadamente para ajustar a proporção
 		float scaleX = static_cast<float>(m_game->window().getSize().x) / (pauseSprite.getLocalBounds().width);
 		float scaleY = static_cast<float>(m_game->window().getSize().y) / (pauseSprite.getLocalBounds().height);
 
-		// Escolher o menor fator de escala para manter a proporção da imagem
 		float scaleFactor = std::min(scaleX, scaleY);
 
-		// Limitar a escala para garantir que a imagem não fique muito grande
 		float maxScaleFactor = 0.25f;
 		scaleFactor = std::min(scaleFactor, maxScaleFactor);
 
-		// Aplicar o fator de escala ao sprite do menu de pausa
 		pauseSprite.setScale(scaleFactor, scaleFactor);
 
-		// Calcular a posição para centralizar o sprite do menu de pausa na tela
 		float posX = (m_game->window().getSize().x - pauseSprite.getGlobalBounds().width) / 2.0f;
 		float posY = (m_game->window().getSize().y - pauseSprite.getGlobalBounds().height) / 2.0f;
 
-		// Ajustar a posição para levar em consideração a diferença entre o tamanho da janela e o tamanho da visualização
 		posX += m_game->window().getView().getCenter().x - m_game->window().getSize().x / 2.0f;
 		posY += m_game->window().getView().getCenter().y - m_game->window().getSize().y / 2.0f;
 
-		// Definir a posição do sprite do menu de pausa
 		pauseSprite.setPosition(posX, posY);
 
-		// Desenhar o menu de pausa
 		m_game->window().draw(pauseSprite);
 
 
 		//////////////////////////////////////////////////////
 
-		// Variáveis para armazenar o estado anterior das teclas de seta
 		static bool prevUpPressed = false;
 		static bool prevDownPressed = false;
 
-		// Criar e desenhar o texto do menu
 		sf::Text menuText;
 		menuText.setFont(Assets::getInstance().getFont("ArcadeBomb"));
 		menuText.setCharacterSize(18);
 		menuText.setFillColor(sf::Color::White);
 
-		// Define a escala do texto
-		float textScale = 0.30f; // Altere isso conforme necessário para diminuir a escala da fonte
+		float textScale = 0.30f;
 		menuText.setScale(sf::Vector2f(textScale, textScale));
 
-		// Definir a posição base dos textos do menu
 		sf::Vector2f baseTextPosition(
 			m_game->window().getView().getCenter().x - menuText.getLocalBounds().width / 2.0f * textScale - 30.0f,
 			m_game->window().getView().getCenter().y - menuText.getLocalBounds().height / 2.0f * textScale - -7.0f
 		);
 
-		// Criar uma lista de strings para o menu de pausa
 		std::vector<std::string> menuStrings = {
 			"RESUME",
 			"OPTIONS",
@@ -496,47 +395,37 @@ void Scene_Bomb::sRender() {
 			"QUIT"
 		};
 
-		// Variável para armazenar a posição atual do cursor no menu
 		size_t selectedOption = 0;
 
-		// Verifica se a tecla de seta para cima foi pressionada pela primeira vez
 		bool upPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !prevUpPressed;
 
-		// Verifica se a tecla de seta para baixo foi pressionada pela primeira vez
 		bool downPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !prevDownPressed;
 
-		// Altera a seleção do menu apenas se a tecla de seta para cima foi pressionada pela primeira vez
 		if (upPressed) {
 			if (selectedOption > 0) {
 				--selectedOption;
 			}
 		}
 
-		// Altera a seleção do menu apenas se a tecla de seta para baixo foi pressionada pela primeira vez
 		if (downPressed) {
 			if (selectedOption < menuStrings.size() - 1) {
 				++selectedOption;
 			}
 		}
 
-		// Verifica se uma tecla de ação foi pressionada (por exemplo, Enter ou Espaço) para executar a ação associada ao item de menu selecionado
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-			// Executar a ação associada ao item de menu selecionado (por exemplo, iniciar o jogo, abrir opções, etc.)
 			executeMenuAction(selectedOption);
 		}
 
-		// Desenhar o texto do menu
 		for (size_t i = 0; i < menuStrings.size(); ++i)
 		{
 			menuText.setString(menuStrings[i]);
 
-			// Ajustar a posição vertical com base no índice da opção
 			menuText.setPosition(
 				baseTextPosition.x,
 				baseTextPosition.y + i * menuText.getLocalBounds().height * 4.2f * textScale
 			);
 
-			// Se a opção atual for a selecionada, definir sua cor para destacá-la
 			if (i == selectedOption) {
 				menuText.setFillColor(sf::Color::Yellow);
 			}
@@ -551,12 +440,10 @@ void Scene_Bomb::sRender() {
 
 void Scene_Bomb::drawVictoryScreen()
 {
-	//	// Pintar a tela de cinza escuro
 	sf::RectangleShape grayScreen(sf::Vector2f(m_game->window().getSize()));
 	grayScreen.setFillColor(sf::Color(24, 24, 24, 200));
 	m_game->window().draw(grayScreen);
 
-	// Carregar a imagem de vitória
 	sf::Texture victoryTexture;
 	victoryTexture.loadFromFile("../assets/Textures/victory.png");
 
@@ -564,16 +451,13 @@ void Scene_Bomb::drawVictoryScreen()
 
 	victorySprite.setScale(0.7f, 0.7f);
 
-	//setar o sprite no meio da tela
 	victorySprite.setPosition(
 		(m_game->window().getSize().x - victorySprite.getGlobalBounds().width) / 2.0f,
 		(m_game->window().getSize().y - victorySprite.getGlobalBounds().height) / 2.0f - 100
 	);
 
-	// Desenhar o sprite de vitória
 	m_game->window().draw(victorySprite);
 
-	// Desenhar o texto de player 1 ou player 2 venceu
 	sf::Text victoryText;
 	victoryText.setFont(Assets::getInstance().getFont("ArcadeBomb"));
 	victoryText.setCharacterSize(56);
@@ -606,7 +490,6 @@ void Scene_Bomb::drawVictoryScreen()
 		(m_game->window().getSize().y - victoryText.getLocalBounds().height) / 2.0 - -50
 	);
 
-	//Desenhar Retry e Quit
 	sf::Text menuText;
 	menuText.setFont(Assets::getInstance().getFont("ArcadeBomb"));
 	menuText.setCharacterSize(30);
@@ -614,24 +497,19 @@ void Scene_Bomb::drawVictoryScreen()
 	menuText.setOutlineColor(sf::Color::Black);
 	menuText.setOutlineThickness(1);
 
-	// desenhe o texto do menu
 	std::vector<std::string> menuStrings = {
 		"Play Again: A",
 		"Quit: Y"
 	};
 
-	//desenhem o texto do menu
 	for (size_t i = 0; i < menuStrings.size(); ++i)
 	{
 		menuText.setString(menuStrings[i]);
-
-		// Ajustar a posição vertical com base no índice da opção
 		menuText.setPosition(
 			(m_game->window().getSize().x - menuText.getLocalBounds().width) / 2.0f,
 			(m_game->window().getSize().y - menuText.getLocalBounds().height) / 2.0f + 220.0f + i * menuText.getLocalBounds().height * 2.2f
 		);
 
-		// Se a opção atual for a selecionada, definir sua cor para destacá-la
 
 		menuText.setFillColor(sf::Color::Yellow);
 
@@ -706,12 +584,11 @@ void Scene_Bomb::sDoAction(const Command& action) {
 	}
 }
 
-//adicione tbm o novo parametro para definir qual sprite sera usado
+//Add the new parameter to define which sprite will be used
 void Scene_Bomb::spawnPlayer(sPtrEntt& playerPtr, sf::Vector2f pos, const std::string& sprite) {
 	playerPtr = m_entityManager.addEntity("player");
 	playerPtr->addComponent<CTransform>(pos);
 	playerPtr->addComponent<CBoundingBox>(sf::Vector2f(15.0f, 15.0f), sf::Vector2f(0.0f, 8.0f));
-	//adicionar o compononent de score
 	playerPtr->addComponent<CScore>();
 	playerPtr->addComponent<CInput>();
 	playerPtr->addComponent<CPlayer>().sprite = sprite;
@@ -724,16 +601,16 @@ void Scene_Bomb::dropBomb(sPtrEntt& player)
 {
 	auto& pos = player->getComponent<CTransform>().pos;
 
-	// Transformei pixel em grid
+	//transform pixel into grid
 	int x = (int)(pos.x / 16);
-	int y = (int)((pos.y + 8) / 16); // +8 para ajustar o origem na bound box (nos pés)
+	int y = (int)((pos.y + 8) / 16); // +8 to adjust the bomb position because the origin is in the center.
 
 	// Tranformar grid em pixel
-	sf::Vector2f np((x * 16) + 8, y * 16); // O +8 em x é para ajustar a posição da bomba pq a origem é no centro.
+	sf::Vector2f np((x * 16) + 8, y * 16); // O +8 in x is to adjust the bomb position because the origin is in the center.
 
 	auto& powerUp = player->getComponent<CPlayer>();
 
-	// Se o total de bombas for maior que quantas ele já soltou no mapa;
+	// if the total of bombs is greater than the bombs dropped, the player can drop a bomb
 	if (powerUp.bomb > powerUp.droped)
 	{
 		for (auto& e : m_entityManager.getEntities("Bomb"))
@@ -764,13 +641,13 @@ void Scene_Bomb::spawnBomb(sPtrEntt& player, sf::Vector2f pos)
 }
 
 bool Scene_Bomb::isColliding(sf::Vector2f pos) {
-	// Verificar se a explosão colide com os tijolos destructable, tijolos não destructable ou paredes
+	//verify if the explosion collides with the destructable bricks, non-destructable bricks or walls
 	for (auto& e : m_entityManager.getEntities("Tile")) {
 		if (e->hasComponent<CBoundingBox>()) {
 			auto& tile = e->getComponent<CTransform>().pos;
 			if (pos == tile) {
 				auto tileType = e->getComponent<CTile>().type;
-				//se colidir com um tijolo destructable, o tijolo é destruido
+				//If colliding with a destructable brick, the brick is destroyed
 				if (tileType == TileType::Destructable || tileType == TileType::None) {
 					return true;
 				}
@@ -795,7 +672,7 @@ void Scene_Bomb::destroyDestructableTile(sf::Vector2f pos, sPtrEntt& player) {
 			auto& tile = e->getComponent<CTransform>().pos;
 			if (pos == tile) {
 				auto tileType = e->getComponent<CTile>().type;
-				//se colidir com um tijolo destructable, o tijolo é destruido
+				//If colliding with a destructable brick, the brick is destroyed
 				if (tileType == TileType::Destructable) {
 					e->removeComponent<CSprite>();
 					e->addComponent<CAnimation>(Assets::getInstance().getAnimation("brick")).animation.play();
@@ -858,7 +735,7 @@ void Scene_Bomb::spawnExplosion(sPtrEntt& bomb)
 	}
 
 	//FIRE RIGHT
-	nPos = pos; //centralizo a posicao antes de poder ir para a direita
+	nPos = pos; //center the position before going right
 	for (int i = 0; i < size; i++)
 	{
 		nPos.x += 16;
@@ -874,7 +751,7 @@ void Scene_Bomb::spawnExplosion(sPtrEntt& bomb)
 	}
 
 	//FIRE UP
-	nPos = pos; //centralizo a posicao antes de poder ir para cima
+	nPos = pos; //center the position before going up
 	for (int i = 0; i < size; i++)
 	{
 		nPos.y -= 16;
@@ -891,7 +768,7 @@ void Scene_Bomb::spawnExplosion(sPtrEntt& bomb)
 	}
 
 	//FIRE DOWN
-	nPos = pos; //centralizo a posicao antes de poder ir para baixo
+	nPos = pos; //center the position before going down
 	for (int i = 0; i < size; i++)
 	{
 		nPos.y += 16;
@@ -963,21 +840,21 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 	//PLAYER AND TILE COLLISION
 	for (auto& tile : m_entityManager.getEntities("Tile"))
 	{
-		if (tile->hasComponent<CBoundingBox>()) // Se o tile collide (se tem o yes ou no)
+		if (tile->hasComponent<CBoundingBox>()) // if the tile has a bounding box
 		{
 			auto overlap = Physics::getOverlap(playerPtr, tile);
 			auto prevOverlap = Physics::getPreviousOverlap(playerPtr, tile);
 
-			if (overlap.x > 0 && overlap.y > 0) // se overlpar em x e y for maior que zero, ele entrou no tile
+			if (overlap.x > 0 && overlap.y > 0) // if overlap is greater than 0, there is a collision
 			{
 
-				if (prevOverlap.x > 0) // Se entrar de cima ou para baixo vai ser nesse if
+				if (prevOverlap.x > 0) // if entered from the top or bottom, adjust the player's position vertically
 				{
 					auto& pos = playerPtr->getComponent<CTransform>().pos;
 
-					if (overlap.x < 7.5f) // 7.5 relacionado ao tamanho do cubo
+					if (overlap.x < 7.5f) // 7.5 related to the size of the cube
 					{
-						if (pos.x > tile->getComponent<CTransform>().pos.x) // Entrou da direita
+						if (pos.x > tile->getComponent<CTransform>().pos.x) // entered the block from the right
 							if (overlap.x - 0.5f < 0)
 							{
 								pos.x += overlap.x;
@@ -987,7 +864,7 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 								pos.x += 0.5f;
 							}
 						//pos.x += overlap.x - 2.0f < 0 ? overlap.x : 2.0f;
-						else // entrou da esquerda
+						else // entered the block from the left
 							if (overlap.x - 0.5f < 0)
 							{
 								pos.x -= overlap.x;
@@ -999,18 +876,18 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 						//pos.x -= overlap.x - 0.5f < 0 ? overlap.x : 0.5f;
 					}
 
-					if (pos.y > tile->getComponent<CTransform>().pos.y) // entrou no bloco por baixo
+					if (pos.y > tile->getComponent<CTransform>().pos.y) // entered the block from the bottom
 						pos.y += overlap.y;
-					else // entrou no bloco por cima
+					else // entered the block from the top
 						pos.y -= overlap.y;
 				}
-				else // Se entrar da direita ou esquerda vai ser nesse else
+				else // if entered from the left or right, adjust the player's position horizontally
 				{
 					auto& pos = playerPtr->getComponent<CTransform>().pos;
 
-					if (overlap.y < 7.5f) // 7.5 relacionado ao tamanho do cubo
+					if (overlap.y < 7.5f) // 7.5 related to the size of the cube
 					{
-						if (pos.y > tile->getComponent<CTransform>().pos.y) // entrou no bloco por baixo
+						if (pos.y > tile->getComponent<CTransform>().pos.y) // entered the block from the bottom
 							if (overlap.y - 0.5f < 0)
 							{
 								pos.y += overlap.y;
@@ -1020,7 +897,7 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 								pos.y += 0.5f;
 							}
 						//pos.y += overlap.y - 0.5f < 0 ? overlap.y : 0.5f;
-						else // entrou no bloco por cima
+						else // entered the block from the top
 							if (overlap.y - 0.5f < 0)
 							{
 								pos.y -= overlap.y;
@@ -1034,7 +911,7 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 
 					if (pos.x > tile->getComponent<CTransform>().pos.x) // entrou no bloco pela direita
 						pos.x += overlap.x;
-					else // entrou no bloco pela esquerda
+					else // entered the block from the left
 						pos.x -= overlap.x;
 				}
 			}
@@ -1048,17 +925,15 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 		auto overlap = Physics::getOverlap(playerPtr, bomb);
 		auto prevOverlap = Physics::getPreviousOverlap(playerPtr, bomb);
 
-		// Verificar se o jogador estava anteriormente sobre a bomba e agora não está mais
-		//bool wasOnBomb = prevOverlap.y > 0 && overlap.y <= 0;
 
-		// Verifica se o jogador está em cima da bomba primeiro
+		// verify if the player is on the bomb
 		auto& isOnBomb = bomb->getComponent<CBomb>().isOnBomb;
 		if (isOnBomb)
 		{
 			auto& bombPlayer = bomb->getComponent<COwner>().owner; // BombPlayer é o player que soltou essa bomba.
 			auto overlapBP = Physics::getOverlap(bombPlayer, bomb); // Overlap do Bomb Player.
 
-			// Ele está, verificamos quando ele sair trocamos o isOnBomb para false.
+			// Verify if the player is still on the bomb, and then change the state of the bomb
 			if (overlapBP.x < 0 || overlapBP.y < 0)
 			{
 				isOnBomb = false;
@@ -1066,28 +941,28 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 		}
 		else
 		{
-			// Ele não está mais na bomba;
-			// Verificar se houve colisão e se o jogador estava anteriormente sobre a bomba
+			// He is no longer on the bomb;
+			//Verify if there was a collision and if the player was previously on the bomb
 			if (overlap.x > 0 && overlap.y > 0 /* && wasOnBomb */) {
-				// Ajustar a posição do jogador para evitar a colisão
+				//Adjust the player's position to avoid collision
 				if (prevOverlap.x > 0)
 				{
-					// Colisão mais forte no eixo Y, mova o jogador verticalmente
+					//collision more strong in the Y axis, move the player vertically
 					auto& pos = playerPtr->getComponent<CTransform>().pos;
 
-					if (pos.y > bomb->getComponent<CTransform>().pos.y) // entrou no bloco por baixo
+					if (pos.y > bomb->getComponent<CTransform>().pos.y) // entered the block from the bottom
 						pos.y += overlap.y;
-					else // entrou no bloco por cima
+					else // entered the block from the top
 						pos.y -= overlap.y;
 				}
 				else
 				{
-					// Colisão mais forte no eixo X, mova o jogador horizontalmente
+					// Collision stronger in the X axis, move the player horizontally
 					auto& pos = playerPtr->getComponent<CTransform>().pos;
 
-					if (pos.x > bomb->getComponent<CTransform>().pos.x) // entrou no bloco pela direita
+					if (pos.x > bomb->getComponent<CTransform>().pos.x) // Entered the block from the right
 						pos.x += overlap.x;
-					else // entrou no bloco pela esquerda
+					else // Entered the block from the left
 						pos.x -= overlap.x;
 				}
 			}
@@ -1163,22 +1038,6 @@ void Scene_Bomb::sCollisions(sPtrEntt& playerPtr) {
 			}
 		}
 	}
-
-	//FIRE AND BOMB
-	//for (auto& fire : m_entityManager.getEntities("Fire"))
-	//{
-	//	for (auto& bomb : m_entityManager.getEntities("Bomb"))
-	//	{
-	//		auto overlap = Physics::getOverlap(fire, bomb);
-	//		auto prevOverlap = Physics::getPreviousOverlap(fire, bomb);
-
-	//		if (overlap.x > 0 && overlap.y > 0)
-	//		{
-	//			//zerar o lifespan da bomba
-	//			bomb->getComponent<CBomb>().lifespan = sf::Time::Zero;
-	//		}
-	//	}
-	//}
 }
 
 void Scene_Bomb::sUpdate(sf::Time dt) {
@@ -1188,7 +1047,7 @@ void Scene_Bomb::sUpdate(sf::Time dt) {
 		return;
 	//m_worldView.move(0.f, m_config.scrollSpeed * dt.asSeconds() * -1);
 
-	//inicia o m_time com 180 segundos e decrementa a cada segundo
+	//Initiates the m_time with 180 seconds and decrements every second
 	m_time -= dt;
 
 	if (m_time <= sf::Time::Zero)
